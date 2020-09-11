@@ -1,0 +1,12 @@
+title SPA Input [0.6]
+
+note over browser:
+browser renders the newly created note
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over server:
+server adds the new note to the array
+end note
+server-->browser: STATUS 201 CREATED {"message" : "note created"}
+
+
