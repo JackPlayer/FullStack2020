@@ -7,29 +7,76 @@ const Button = ({text, handler, amount}) => {
   const handleClick = () => {
     handler(amount + 1)
   }
+
   return (
     <>
-      <button class="btn" onClick={handleClick}>{text}</button>
+      <button className="btn" onClick={handleClick}>{text}</button>
     </>
   )
 }
-const Stat = ({text, amount}) => (
-  <>
-    <p><strong>{text}: </strong>{amount}</p>
-  </>
-)
+const Stat = ({text, amount, percent}) => {
+  if (percent) {
+    return (
+      <>
+        <p><strong>{text}: </strong>{amount * 100} %</p>
+      </>
+    )
+  }
+  return (
+    <>
+      <p><strong>{text}: </strong>{amount}</p>
+    </>
+  )
+}
 
-const Statistics = ({good, bad, neutral}) => (
-  <>
+const Statistics = ({stats}) => {
+  const { good, bad, neutral } = stats
+ 
+  
+  const calcTotal = () => {
+    return good + bad + neutral
+  }
+
+  const calcPositive = () => {
+    return good / calcTotal()
+  }
+  
+  const calcAverage = () => {
+    if ( good === 0 && bad === 0 && neutral === 0) {
+      return 0
+    }
+    let scores = []
+    for (var i = 0; i < good; i++) {
+      scores.push(1)
+    } 
+
+    for (let i = 0; i < bad; i++) {
+      scores.push(-1)
+    } 
+
+    for (let i = 0; i < neutral; i++) {
+      scores.push(0)
+    } 
+    
+    const sum = scores.reduce((total, n) => total + n);
+    return sum / scores.length;
+  }
+  return (
+    <>
     <h1>Statistics</h1>
     <div id="stats">
-      <Stat text="Good" amount={good}/>
-      <Stat text="Neutral" amount={neutral}/>  
-      <Stat text="Bad" amount={bad}/>  
+      <Stat text="Good" amount={stats.good}/>
+      <Stat text="Neutral" amount={stats.neutral}/>  
+      <Stat text="Bad" amount={stats.bad}/>  
+      <Stat text="All" amount={calcTotal()}/>
+      <Stat text="Average" amount={calcAverage()}/>  
+      <Stat text="Positive" amount={calcPositive()} percent={true}/>
 
     </div>
   </>
-)
+  )
+ 
+}
 const Feedback = ({stats, handlers}) => {
   return (
     <>
@@ -64,7 +111,7 @@ const App = () => {
   return (
     <div>
       <Feedback stats={stats} handlers={handlers}/>
-      <Statistics good={good} neutral={neutral} bad={bad} />
+      <Statistics stats={stats} />
     </div>
   )
 }
