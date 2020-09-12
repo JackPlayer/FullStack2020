@@ -15,3 +15,7 @@ code {
 .btn {
   color: red;
 }
+
+table {
+  margin-right: 0;
+}

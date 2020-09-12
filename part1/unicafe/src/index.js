@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-
 const Button = ({text, handler, amount}) => {
   const handleClick = () => {
     handler(amount + 1)
@@ -16,16 +15,19 @@ const Button = ({text, handler, amount}) => {
 }
 const Stat = ({text, amount, percent}) => {
   if (percent) {
+    
     return (
-      <>
-        <p><strong>{text}: </strong>{amount * 100} %</p>
-      </>
+      <tr>
+      <th>{text}</th>
+      <td>{(amount * 100).toFixed(2)} %</td>
+    </tr>
     )
   }
   return (
-    <>
-      <p><strong>{text}: </strong>{amount}</p>
-    </>
+    <tr>
+      <th>{text}</th>
+      <td>{amount}</td>
+    </tr>
   )
 }
 
@@ -61,17 +63,29 @@ const Statistics = ({stats}) => {
     const sum = scores.reduce((total, n) => total + n);
     return sum / scores.length;
   }
+
+  if (good === 0 && bad === 0 && neutral === 0) {
+    return (
+      <>
+       <h1>Statistics</h1>
+       <p>No feedback given</p>
+      </>
+    )
+  }
   return (
     <>
     <h1>Statistics</h1>
     <div id="stats">
-      <Stat text="Good" amount={stats.good}/>
-      <Stat text="Neutral" amount={stats.neutral}/>  
-      <Stat text="Bad" amount={stats.bad}/>  
-      <Stat text="All" amount={calcTotal()}/>
-      <Stat text="Average" amount={calcAverage()}/>  
-      <Stat text="Positive" amount={calcPositive()} percent={true}/>
-
+      <table>
+        <tbody>
+          <Stat text="Good" amount={stats.good}/>
+          <Stat text="Neutral" amount={stats.neutral}/>  
+          <Stat text="Bad" amount={stats.bad}/>  
+          <Stat text="All" amount={calcTotal()}/>
+          <Stat text="Average" amount={calcAverage().toFixed(2)}/>  
+          <Stat text="Positive" amount={calcPositive().toFixed(2)} percent={true}/>
+        </tbody>
+      </table>
     </div>
   </>
   )

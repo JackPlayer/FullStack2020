@@ -27,3 +27,13 @@ code {
 .btn:hover {
   cursor: pointer;
 }
+
+table {
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+td {
+  text-align: right;
+}
