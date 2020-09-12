@@ -9,6 +9,19 @@ const App = () => {
 
   const handleAddName = (e) => {
     e.preventDefault();
+
+    let alreadyExists = false
+    persons.forEach((person) => {
+      if (person.name === newName) {
+        window.alert(`${person.name} is already added to the phonebook`)
+        alreadyExists = true
+      }
+    })
+
+    if (alreadyExists) { 
+      setNewName('')  
+      return 
+    }
     const newPerson = {
       name: newName
     }
