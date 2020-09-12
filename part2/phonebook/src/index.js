@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Jack Player', number: "250-555-5555"}
@@ -42,31 +46,13 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Filter filter={filter} onChange={(e) => setFilter(e.target.value)} />
 
-      <div>
-        Filter: <input value={filter} onChange={(e) => setFilter(e.target.value)}/>
-      </div>
       <h2>Add New</h2>
-      <form onSubmit={handleAddEntry}>
-        <div>
-          Name: <input value={newName} onChange={(e) => setNewName(e.target.value)}/>
-        </div>
-        <div>
-          Number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm onSubmit={handleAddEntry} onChangeName={(e) => setNewName(e.target.value)} onChangeNumber={(e) => setNewNumber(e.target.value)} newName={newName} newNumber={newNumber}/>
+
       <h2>Numbers</h2>
-      <ul>
-        {
-          // Filter out names that don't match the filter. Map to list item
-          persons.filter((person) => person.name.includes(filter)).map((person) => {
-            return <li key={person.name}>{person.name} {person.number}</li>
-          })
-        }
-      </ul>
+      <Persons persons={persons} filter={filter} />
       
     </div>
   )
