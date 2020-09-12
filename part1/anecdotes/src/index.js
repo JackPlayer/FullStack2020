@@ -26,6 +26,8 @@ const App = (props) => {
     }
   })
 
+  
+
   return (
     <div id="main">
       <h1>Anecdotes</h1>
