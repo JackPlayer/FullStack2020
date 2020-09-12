@@ -7,6 +7,7 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ filter, setFilter]  = useState('')
 
   const handleAddEntry = (e) => {
     e.preventDefault();
@@ -40,13 +41,18 @@ const App = () => {
   }
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+
+      <div>
+        Filter: <input value={filter} onChange={(e) => setFilter(e.target.value)}/>
+      </div>
+      <h2>Add New</h2>
       <form onSubmit={handleAddEntry}>
         <div>
-          name: <input value={newName} onChange={(e) => setNewName(e.target.value)}/>
+          Name: <input value={newName} onChange={(e) => setNewName(e.target.value)}/>
         </div>
         <div>
-          number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)}/>
+          Number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)}/>
         </div>
         <div>
           <button type="submit">add</button>
@@ -54,9 +60,12 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person) => {
-          return <li key={person.name}>{person.name}   {person.number}</li>
-        })}
+        {
+          // Filter out names that don't match the filter. Map to list item
+          persons.filter((person) => person.name.includes(filter)).map((person) => {
+            return <li key={person.name}>{person.name} {person.number}</li>
+          })
+        }
       </ul>
       
     </div>
