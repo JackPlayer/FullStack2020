@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: salmon;
+  color: #EEE;
+  display: flex; 
+  justify-content: center;
+  text-align:center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: 3px 3px #333;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  margin: 10px;
+
+}
+.btn:hover {
+  cursor: pointer;
+}
