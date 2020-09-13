@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 
 import axios from 'axios'
 
+import Weather from './components/Weather'
+import CountryDisplay from './components/CountryDisplay'
+
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -39,14 +42,8 @@ const App = () => {
   if (selectedCountries.length === 1) {
     countryRender = (
       <>
-        <h2>{selectedCountries[0].name}</h2>
-        <p>Capital: {selectedCountries[0].capital}</p>
-        <p>Population: {selectedCountries[0].population}</p>
-        <h3>Languages</h3>
-        <ul>
-          {selectedCountries[0].languages.map((language) => <li key={language.iso639_1}>{language.name}</li>)}
-        </ul>
-        <img alt={`Flag of ${selectedCountries[0].name}`} src={selectedCountries[0].flag} />
+        <CountryDisplay country={selectedCountries[0]} />
+        <Weather city={selectedCountries[0].capital} />
       </>
     )
   } else {
