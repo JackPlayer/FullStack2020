@@ -13,8 +13,6 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter]  = useState('')
 
-  const endpoint = "http://localhost:3001/persons"
-  console.log(persons)
   useEffect(() => {
     personsService
       .getAll()
@@ -60,6 +58,22 @@ const App = () => {
     
   }
 
+
+  const handleDelete = (e) => {
+    const id = e.target.getAttribute('person_id')
+
+    if (
+      window.confirm(`Delete ${persons.find((person) => person.id === parseInt(id)).name}?`)
+    ) {
+      personsService.remove(id)
+                    .then((res) => {
+                      const newPersons = persons.filter((person) => person.id !== parseInt(id))
+                      setPersons(newPersons)
+                    })
+    }
+    
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -69,7 +83,7 @@ const App = () => {
       <PersonForm onSubmit={handleAddEntry} onChangeName={(e) => setNewName(e.target.value)} onChangeNumber={(e) => setNewNumber(e.target.value)} newName={newName} newNumber={newNumber}/>
 
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons onClick={handleDelete} persons={persons} filter={filter} />
       
     </div>
   )

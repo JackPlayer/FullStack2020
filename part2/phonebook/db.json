@@ -1,42 +1,16 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "name": "Cindy",
+      "number": "124",
+      "date": "2020-09-13T23:12:46.641Z",
       "id": 3
     },
     {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "Jack Player",
-      "number": "250-5320955",
-      "date": "2020-09-13T22:27:29.883Z",
+      "name": "Ali Baba",
+      "number": "12314",
+      "date": "2020-09-13T23:13:02.598Z",
       "id": 5
-    },
-    {
-      "name": "Cindy Player",
-      "number": "234234",
-      "date": "2020-09-13T22:39:36.588Z",
-      "id": 6
-    },
-    {
-      "name": "Lorna McRae",
-      "number": "250-888",
-      "date": "2020-09-13T22:39:55.498Z",
-      "id": 7
     }
   ]
 }

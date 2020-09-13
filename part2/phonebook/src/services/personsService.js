@@ -16,4 +16,9 @@ const update = (id, updatedEntry) => {
     return response.then((response) => response.data)
 }
 
-export default {getAll, create, update}
+const remove = (id) => {
+    const response = axios.delete(`${endpoint}/${id}`)
+    return response.then((response) => response.data)
+}
+
+export default {getAll, create, update, remove}
