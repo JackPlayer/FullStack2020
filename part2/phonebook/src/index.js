@@ -13,9 +13,11 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter]  = useState('')
 
+  const endpoint = "http://localhost:3001/persons"
+  console.log(persons)
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(endpoint)
       .then((response) => {
         setPersons(response.data)
       })
@@ -44,12 +46,17 @@ const App = () => {
 
     const newPerson = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      date: new Date()
     }
-
-    setPersons(persons.concat(newPerson))
-    setNewNumber('')
-    setNewName('')
+    axios
+      .post(endpoint, newPerson)
+      .then((response) => {
+        setPersons(persons.concat(newPerson))
+        setNewNumber('')
+        setNewName('')
+      })
+    
   }
 
   return (
