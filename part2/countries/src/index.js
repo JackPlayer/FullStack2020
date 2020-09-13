@@ -26,6 +26,11 @@ const App = () => {
     )
   }
 
+
+  const handleClick = (event) => {
+    const country = event.target.getAttribute('country')
+    setInput(country)
+  }
   let selectedCountries = countries
                               .filter((country) => country.name.includes(newInput))
         
@@ -45,7 +50,14 @@ const App = () => {
       </>
     )
   } else {
-    countryRender = selectedCountries.map((country) => <p key={country.name}>{country.name}</p> )
+    countryRender = selectedCountries.map((country) => {
+      return (
+        <div key={country.name}>
+          {country.name + " "}
+          <button onClick={handleClick} country={country.name}>Show</button>
+        </div>
+      )
+    })
   }
 
   
