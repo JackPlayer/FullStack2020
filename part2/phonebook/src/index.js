@@ -23,24 +23,41 @@ const App = () => {
 
   const handleAddEntry = (e) => {
     e.preventDefault();
+    
+    if (newName === '' || newNumber === '') {
+      window.alert('One or both of the fields are blank')
+      return
+    }
 
     let alreadyExists = false
+    // Loop through persons
     persons.forEach((person) => {
+
+      // Name already exists in the database
       if (person.name === newName) {
-        window.alert(`${person.name} is already added to the phonebook`)
         alreadyExists = true
+
+        // Ask to confirm if the number should be updated
+        if (
+          window.confirm(`${person.name} is already added to the phonebook. Replace the old number with the new one?`)
+        ) {
+
+          const changedPerson = {...person, number: newNumber}
+
+          // Update the number entry in the database
+          personsService.update(person.id, changedPerson)
+                        .then((updatedPerson) => {
+                          // Update the persons list and re-render
+                          setPersons(persons.map((p) => p.id !== updatedPerson.id ? p : updatedPerson))
+                        })
+                        .catch((err) => {
+                          alert (`${person.name} entry could not be updated`)
+                        })
+        }
       }
     })
 
-    if (newName === '' || newNumber === '') {
-      window.alert('One or both of the fields are blank')
-    }
-
-    if (alreadyExists || newName === '' || newNumber === '') { 
-      setNewName('')
-      setNewNumber('')  
-      return 
-    }
+    if (alreadyExists) return 
 
     const newPerson = {
       name: newName,
