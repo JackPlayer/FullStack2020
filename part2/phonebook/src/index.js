@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
-import axios from 'axios'
+import personsService from './services/personsService'
 
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
@@ -16,10 +16,10 @@ const App = () => {
   const endpoint = "http://localhost:3001/persons"
   console.log(persons)
   useEffect(() => {
-    axios
-      .get(endpoint)
-      .then((response) => {
-        setPersons(response.data)
+    personsService
+      .getAll()
+      .then((personsData) => {
+        setPersons(personsData)
       })
   }, [])
 
@@ -49,10 +49,11 @@ const App = () => {
       number: newNumber,
       date: new Date()
     }
-    axios
-      .post(endpoint, newPerson)
-      .then((response) => {
-        setPersons(persons.concat(newPerson))
+    
+    personsService
+      .create(newPerson)
+      .then((newEntry) => {
+        setPersons(persons.concat(newEntry))
         setNewNumber('')
         setNewName('')
       })
