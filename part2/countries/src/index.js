@@ -39,20 +39,22 @@ const App = () => {
         <p>Population: {selectedCountries[0].population}</p>
         <h3>Languages</h3>
         <ul>
-          {selectedCountries[0].languages.map((language) => <li>{language.name}</li>)}
+          {selectedCountries[0].languages.map((language) => <li key={language.iso639_1}>{language.name}</li>)}
         </ul>
-        <img src={selectedCountries[0].flag} />
+        <img alt={`Flag of ${selectedCountries[0].name}`} src={selectedCountries[0].flag} />
       </>
     )
   } else {
-    countryRender = selectedCountries.filter((country) => <p>{country.name}</p> )
+    countryRender = selectedCountries.map((country) => <p key={country.name}>{country.name}</p> )
   }
+
+  
   return (
-    <div>
+    <>
       Find Countries: <input value={newInput} onChange={(e) => setInput(e.target.value)}/>
       { renderLoading }
       { countryRender }
-    </div>
+    </>
   )
 }
 
