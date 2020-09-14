@@ -6,9 +6,13 @@ import personsService from './services/personsService'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Message from './components/Message'
+
+import './style.css'
 
 const App = () => {
-  const [ persons, setPersons ] = useState([]) 
+  const [ persons, setPersons ] = useState([])
+  const [ updateMessage, setUpdateMessage] = useState('') 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter]  = useState('')
@@ -49,6 +53,9 @@ const App = () => {
                         .then((updatedPerson) => {
                           // Update the persons list and re-render
                           setPersons(persons.map((p) => p.id !== updatedPerson.id ? p : updatedPerson))
+                          setNewNumber('')
+                          setNewName('')
+                          setUpdateMessage(`${updatedPerson.name} has updated their number to ${updatedPerson.number}`)
                         })
                         .catch((err) => {
                           alert (`${person.name} entry could not be updated`)
@@ -69,6 +76,7 @@ const App = () => {
       .create(newPerson)
       .then((newEntry) => {
         setPersons(persons.concat(newEntry))
+        setUpdateMessage(`${newPerson.name} has been added`)
         setNewNumber('')
         setNewName('')
       })
@@ -94,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Message message={updateMessage} color={"green"} errorMessageController={() => setUpdateMessage('')} timeout={3000}/>
       <Filter filter={filter} onChange={(e) => setFilter(e.target.value)} />
 
       <h2>Add New</h2>
