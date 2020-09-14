@@ -12,7 +12,7 @@ import './style.css'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
-  const [ updateMessage, setUpdateMessage] = useState('') 
+  const [ updateMessage, setUpdateMessage] = useState({message: "", type: "normal"}) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter]  = useState('')
@@ -55,10 +55,10 @@ const App = () => {
                           setPersons(persons.map((p) => p.id !== updatedPerson.id ? p : updatedPerson))
                           setNewNumber('')
                           setNewName('')
-                          setUpdateMessage(`${updatedPerson.name} has updated their number to ${updatedPerson.number}`)
+                          setUpdateMessage({message: `${updatedPerson.name} has updated their number to ${updatedPerson.number}`, type: 'normal'})
                         })
                         .catch((err) => {
-                          alert (`${person.name} entry could not be updated`)
+                          setUpdateMessage({message: `Error: ${person.name} entry could not be updated`, type: "error"})
                         })
         }
       }
@@ -76,7 +76,7 @@ const App = () => {
       .create(newPerson)
       .then((newEntry) => {
         setPersons(persons.concat(newEntry))
-        setUpdateMessage(`${newPerson.name} has been added`)
+        setUpdateMessage({message: `${newPerson.name} has been added`, type: 'normal'})
         setNewNumber('')
         setNewName('')
       })
@@ -95,6 +95,9 @@ const App = () => {
                       const newPersons = persons.filter((person) => person.id !== parseInt(id))
                       setPersons(newPersons)
                     })
+                    .catch((err) => {
+                      setUpdateMessage({message: `Error deleting person with ID: ${id}`, type: "error"})
+                    })
     }
     
   }
@@ -102,7 +105,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Message message={updateMessage} color={"green"} errorMessageController={() => setUpdateMessage('')} timeout={3000}/>
+      <Message message={updateMessage} errorMessageController={() => setUpdateMessage({...updateMessage, message: ''})} timeout={3000}/>
       <Filter filter={filter} onChange={(e) => setFilter(e.target.value)} />
 
       <h2>Add New</h2>

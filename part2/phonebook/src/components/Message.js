@@ -1,7 +1,10 @@
 import React from 'react'
 
-const Message = ({message, color, timeout, errorMessageController}) => {
-    if (message === '') return null
+const Message = ({message, timeout, errorMessageController}) => {
+    if (message.message === '') return null
+    
+    const color = (message.type === 'normal') ? 'green': 'darkred' 
+    
     const messageStyle = {
         height: "2%",
         color,
@@ -15,7 +18,7 @@ const Message = ({message, color, timeout, errorMessageController}) => {
 
     return (
         <div id="message" style={messageStyle}>
-            <p>{message}</p>    
+            <p>{message.message}</p>    
         </div>
     )
 }
