@@ -86,13 +86,13 @@ const App = () => {
 
   const handleDelete = (e) => {
     const id = e.target.getAttribute('person_id')
-
+    
     if (
-      window.confirm(`Delete ${persons.find((person) => person.id === parseInt(id)).name}?`)
+      window.confirm(`Delete ${persons.find((person) => person.id === id).name}?`)
     ) {
       personsService.remove(id)
                     .then((res) => {
-                      const newPersons = persons.filter((person) => person.id !== parseInt(id))
+                      const newPersons = persons.filter((person) => person.id !== id)
                       setPersons(newPersons)
                     })
                     .catch((err) => {
