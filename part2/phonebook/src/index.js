@@ -58,7 +58,8 @@ const App = () => {
                           setUpdateMessage({message: `${updatedPerson.name} has updated their number to ${updatedPerson.number}`, type: 'normal'})
                         })
                         .catch((err) => {
-                          setUpdateMessage({message: `Error: ${person.name} entry could not be updated. ${err.response.data}`, type: "error"})
+                          console.log(err.response.data)
+                          setUpdateMessage({message: `Error: ${person.name} entry could not be updated. ${err.response.data.error}`, type: "error"})
                         })
         }
       }
@@ -81,7 +82,8 @@ const App = () => {
         setNewName('')
       })
       .catch((error) => {
-        setUpdateMessage({message: `${error.response.data}`, type: 'error'})
+        console.log(error.response.data)
+        setUpdateMessage({message: `${error.response.data.error}`, type: 'error'})
       })
     
   }
