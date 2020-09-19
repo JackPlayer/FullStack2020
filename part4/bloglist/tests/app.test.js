@@ -45,6 +45,27 @@ test('valid blog is added to db', async () => {
   expect(endList).toContain('Elias Petterson')
 })
 
+test('blog with no likes property defaults to 0 likes', async () => {
+  const newObject = {
+    title: 'Oh Captain, My Captain',
+    author: 'Bo Horvat',
+    url: 'www.captain.ca',
+  }
+  await api
+    .post('/api/blogs')
+    .send(newObject)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const endResult = await api.get('/api/blogs')
+
+  const endList = endResult.body.map((e) => e)
+  const addedObject = endList.find((e) => e.author === 'Bo Horvat')
+  expect(addedObject.likes).toBeDefined()
+  expect(addedObject.likes).toBe(0)
+})
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
