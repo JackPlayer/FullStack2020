@@ -65,6 +65,28 @@ test('blog with no likes property defaults to 0 likes', async () => {
   expect(addedObject.likes).toBe(0)
 })
 
+test('blog with no url or title', async () => {
+  const blogNoURL = {
+    title: 'Oh Captain, My Captain',
+    author: 'Bo Horvat',
+    likes: 50,
+  }
+  await api
+    .post('/api/blogs')
+    .send(blogNoURL)
+    .expect(400)
+
+  const blogNoTitle = {
+    urL: 'www.captain.ca',
+    author: 'Bo Horvat',
+    likes: 50,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogNoTitle)
+    .expect(400)
+})
 
 afterAll(() => {
   mongoose.connection.close()
