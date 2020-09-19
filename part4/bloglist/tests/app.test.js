@@ -19,6 +19,11 @@ test('gets the blog objects and has the proper amount of blog objects', async ()
   expect(result.body).toHaveLength(helper.initialBlogs.length)
 })
 
+test('has an id field', async () => {
+  const result = await api.get('/api/blogs')
+  expect(result.body[0].id).toBeDefined()
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
