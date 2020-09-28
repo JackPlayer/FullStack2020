@@ -6,6 +6,7 @@ require('express-async-errors')
 
 const logger = require('./utils/logger')
 const config = require('./utils/config')
+const loginRouter = require('./controllers/login')
 const blogsRouter = require('./controllers/blogs')
 const userRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
@@ -26,6 +27,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
+app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', userRouter)
 
