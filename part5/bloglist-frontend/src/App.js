@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState([])
-  const [password, setPassword] = useState([])
+  const [user, setUser] = useState(null)
+  const [error, setErrorMessage] = useState(null)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -13,9 +16,20 @@ const App = () => {
     )  
   }, [])
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
-    console.log("Logging in with ", username, " ", password )
+    try {
+      const user = await loginService.login({username, password})
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      console.log("Error: Invalid Credentials")
+      setErrorMessage('Invalid Credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
   const renderLogin = () => {
     return (
@@ -40,7 +54,8 @@ const App = () => {
   const renderBlogs = () => {
     return (
       <div>
-        <h2>blogs</h2>
+        <h2>Blogs</h2>
+        <p>{user.name} is logged in.</p>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
@@ -50,7 +65,8 @@ const App = () => {
 
   return (
     <div>
-      {renderLogin()}
+      {user === null ? renderLogin() : renderBlogs()}
+      <p id="errorMsg">{error}</p>
     </div>
   )
   
