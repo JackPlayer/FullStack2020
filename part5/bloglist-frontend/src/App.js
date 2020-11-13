@@ -16,15 +16,25 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedBlogUser')
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const user = await loginService.login({username, password})
+      window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log("Error: Invalid Credentials")
       setErrorMessage('Invalid Credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -33,6 +43,7 @@ const App = () => {
   }
 
   const handleLogout = (event) => {
+    window.localStorage.removeItem('loggedBlogUser')
     setUser(null)
   }
   const renderLogin = () => {
