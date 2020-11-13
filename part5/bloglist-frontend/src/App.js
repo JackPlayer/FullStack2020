@@ -31,6 +31,10 @@ const App = () => {
       }, 5000)
     }
   }
+
+  const handleLogout = (event) => {
+    setUser(null)
+  }
   const renderLogin = () => {
     return (
       <>
@@ -59,6 +63,8 @@ const App = () => {
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
+
+        <button onClick={handleLogout}>Logout</button>
       </div>
     )
   }
