@@ -66,7 +66,6 @@ const App = () => {
       }
 
      try {
-        console.log("trying")
         await blogService.create(newBlog)
 
         const newBlogs = await blogService.getAll()
