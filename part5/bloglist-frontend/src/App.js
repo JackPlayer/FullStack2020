@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -53,7 +54,10 @@ const App = () => {
   const handleCreate = async (event) => {
     console.log("Handling create", url, author, title)
     if (url.length === 0 || author.length === 0 || title.length === 0) {
-      console.log('All fields must be filled.')
+      setErrorMessage('All fields must be filled.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     } else {
       const newBlog = {
         title, 
@@ -128,7 +132,7 @@ const App = () => {
   return (
     <div>
       {user === null ? renderLogin() : renderBlogs()}
-      <p id="errorMsg">{error}</p>
+      {error && <Notification content={error} timeout={5000}/>}
     </div>
   )
   
