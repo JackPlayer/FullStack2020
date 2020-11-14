@@ -9,6 +9,9 @@ const App = () => {
   const [error, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [url, setURL] = useState('')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -46,6 +49,35 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogUser')
     setUser(null)
   }
+
+  const handleCreate = async (event) => {
+    console.log("Handling create", url, author, title)
+    if (url.length === 0 || author.length === 0 || title.length === 0) {
+      console.log('All fields must be filled.')
+    } else {
+      const newBlog = {
+        title, 
+        url, 
+        author,
+      }
+
+     try {
+        console.log("trying")
+        await blogService.create(newBlog)
+
+        const newBlogs = await blogService.getAll()
+
+        setBlogs(newBlogs)
+        setURL('')
+        setAuthor('')
+        setTitle('') 
+      } catch (err) {
+        console.log("Something went wrong adding a blog")
+      }
+    }
+  } 
+
+
   const renderLogin = () => {
     return (
       <>
@@ -69,13 +101,26 @@ const App = () => {
   const renderBlogs = () => {
     return (
       <div>
-        <h2>Blogs</h2>
-        <p>{user.name} is logged in.</p>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
-
-        <button onClick={handleLogout}>Logout</button>
+        <div id="blogs">
+          <h2>Blogs</h2>
+          <p><strong>{user.name}</strong> is logged in.</p>
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+        <div id="create">
+          <h2>Create New</h2>
+          <form onSubmit={handleCreate}>
+            <label>Title: </label> <input type="text" onChange={({target}) => {setTitle(target.value)}}></input>
+            <br></br>
+            <label>Author: </label> <input type="text" onChange={({target}) => {setAuthor(target.value)}}></input>
+            <br></br>
+            <label>URL: </label> <input type="text" onChange={({target}) => {setURL(target.value)}}></input>
+            <br></br>
+            <button type="submit">Create</button>
+          </form>
+        </div>
       </div>
     )
   }
