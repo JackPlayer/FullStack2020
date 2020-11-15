@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -14,6 +15,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
 
+  const createFormRef = useRef()
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -74,10 +76,13 @@ const App = () => {
         setURL('')
         setAuthor('')
         setTitle('') 
+
+        createFormRef.current.toggle()
       } catch (err) {
         console.log("Something went wrong adding a blog")
       }
     }
+    return Promise
   } 
 
 
@@ -104,26 +109,30 @@ const App = () => {
   const renderBlogs = () => {
     return (
       <div>
+        <h4><strong>{user.name}</strong> is logged in.</h4>
+
+        <Toggleable buttonPrompt="New Blog Entry" ref={createFormRef}>
+          <div id="create">
+            <h2>Create New</h2>
+            <form onSubmit={handleCreate}>
+              <label>Title: </label> <input type="text" onChange={({target}) => {setTitle(target.value)}}></input>
+              <br></br>
+              <label>Author: </label> <input type="text" onChange={({target}) => {setAuthor(target.value)}}></input>
+              <br></br>
+              <label>URL: </label> <input type="text" onChange={({target}) => {setURL(target.value)}}></input>
+              <br></br>
+              <button type="submit">Create</button>
+            </form>
+          </div>
+        </Toggleable>
         <div id="blogs">
           <h2>Blogs</h2>
-          <p><strong>{user.name}</strong> is logged in.</p>
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
           )}
           <button onClick={handleLogout}>Logout</button>
         </div>
-        <div id="create">
-          <h2>Create New</h2>
-          <form onSubmit={handleCreate}>
-            <label>Title: </label> <input type="text" onChange={({target}) => {setTitle(target.value)}}></input>
-            <br></br>
-            <label>Author: </label> <input type="text" onChange={({target}) => {setAuthor(target.value)}}></input>
-            <br></br>
-            <label>URL: </label> <input type="text" onChange={({target}) => {setURL(target.value)}}></input>
-            <br></br>
-            <button type="submit">Create</button>
-          </form>
-        </div>
+        
       </div>
     )
   }
