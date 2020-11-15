@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Toggleable from './components/Toggleable'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -11,9 +12,7 @@ const App = () => {
   const [error, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [url, setURL] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
+  
 
   const createFormRef = useRef()
   useEffect(() => {
@@ -53,38 +52,22 @@ const App = () => {
     setUser(null)
   }
 
-  const handleCreate = async (event) => {
-    console.log("Handling create", url, author, title)
-    if (url.length === 0 || author.length === 0 || title.length === 0) {
-      setErrorMessage('All fields must be filled.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    } else {
-      const newBlog = {
-        title, 
-        url, 
-        author,
-      }
-
-     try {
-        await blogService.create(newBlog)
-
-        const newBlogs = await blogService.getAll()
-
-        setBlogs(newBlogs)
-        setURL('')
-        setAuthor('')
-        setTitle('') 
-
-        createFormRef.current.toggle()
-      } catch (err) {
-        console.log("Something went wrong adding a blog")
-      }
+  const addBlog = (blogObject) => {
+     
+      blogService
+        .create(blogObject)
+        .then((returnedBlog) => {
+          setBlogs(blogs.concat(returnedBlog))
+          createFormRef.current.toggle()
+        })
+        .catch((err) => {
+          setErrorMessage(`Something went wrong trying to add the new blog [${err.message}]`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+                
     }
-    return Promise
-  } 
-
 
   const renderLogin = () => {
     return (
@@ -112,18 +95,7 @@ const App = () => {
         <h4><strong>{user.name}</strong> is logged in.</h4>
 
         <Toggleable buttonPrompt="New Blog Entry" ref={createFormRef}>
-          <div id="create">
-            <h2>Create New</h2>
-            <form onSubmit={handleCreate}>
-              <label>Title: </label> <input type="text" onChange={({target}) => {setTitle(target.value)}}></input>
-              <br></br>
-              <label>Author: </label> <input type="text" onChange={({target}) => {setAuthor(target.value)}}></input>
-              <br></br>
-              <label>URL: </label> <input type="text" onChange={({target}) => {setURL(target.value)}}></input>
-              <br></br>
-              <button type="submit">Create</button>
-            </form>
-          </div>
+          <BlogForm createBlog={addBlog}/>
         </Toggleable>
         <div id="blogs">
           <h2>Blogs</h2>
