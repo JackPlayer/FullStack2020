@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 /**
- * Notification Component shows a notification when invoked and 
+ * Notification Component shows a notification when invoked and
  * hides after timeout ms
- * @param {*} props The props passed into the component 
+ * @param {*} props The props passed into the component
  */
-const Notification = ({ content, timeout}) => {
+const Notification = ({ content, timeout }) => {
 
   const [style, setStyle] = useState( {
-    'width': "100%",
-    'padding': "2rem",
+    'width': '100%',
+    'padding': '2rem',
     'color': 'black',
     'border': '3px solid black',
     'backgroundColor': '#BBB'
@@ -22,7 +22,7 @@ const Notification = ({ content, timeout}) => {
   useEffect(() => {
     setTimeout(() => {
       const newStyle = {
-        ...style, 
+        ...style,
         'display': 'none'
       }
 

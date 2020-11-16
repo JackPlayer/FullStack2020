@@ -20,7 +20,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
 
   /**
    * Handles the like button being pressed. Uses the updateBlog prop function
-   * @param {*} e The event handler 
+   * @param {*} e The event handler
    */
   const handleLike = (e) => {
     e.preventDefault()
@@ -34,7 +34,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
 
   /**
    * Handles the remove button being pressed. Uses the removeBlog prop function
-   * @param {*} e The event handler 
+   * @param {*} e The event handler
    */
   const handleRemove = (e) => {
     e.preventDefault()
@@ -53,24 +53,24 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
           <button onClick={handleRemove}>Remove Post</button>
         )
       }
-    } 
+    }
     return
   }
 
   return (
     <div style={blogStyle}>
-      <h2 style={{textTransform: 'uppercase', textAlign: 'center'}}>{blog.title}</h2>
-      <p style={{"fontStyle": "italic"}}>Author: {blog.author}</p>
+      <h2 style={{ textTransform: 'uppercase', textAlign: 'center' }}>{blog.title}</h2>
+      <p style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
       <Toggleable buttonPrompt="View">
         <p>URL: {blog.url}</p>
-        <p>Likes: {blog.likes}</p> <button style={{display: 'inline-block'}} onClick={handleLike}>Like</button>
+        <p>Likes: {blog.likes}</p> <button style={{ display: 'inline-block' }} onClick={handleLike}>Like</button>
         {renderRemoveButton()}
       </Toggleable>
     </div>
   )
-   
+
 }
-  
+
 export default Blog
 
 Blog.propTypes = {

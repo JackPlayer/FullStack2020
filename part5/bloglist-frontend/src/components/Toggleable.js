@@ -1,4 +1,4 @@
-import React, {useState, useImperativeHandle } from 'react'
+import React, { useState, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -6,18 +6,18 @@ import PropTypes from 'prop-types'
  * Contains props.children
  */
 const Toggleable = React.forwardRef((props, ref) => {
-  const [toggledStyle, setToggledStyle] = useState({"display": "none"})
+  const [toggledStyle, setToggledStyle] = useState({ 'display': 'none' })
 
   /**
-   * Handles the toggling functionality 
-   * This function can be passed with imperative handle to its parent. 
+   * Handles the toggling functionality
+   * This function can be passed with imperative handle to its parent.
    * Allows the parent to control the toggle as well
    */
   const toggle = () => {
-    if (toggledStyle.display === "none") {
-      setToggledStyle({"display": "block"})
+    if (toggledStyle.display === 'none') {
+      setToggledStyle({ 'display': 'block' })
     } else {
-      setToggledStyle({"display": "none"})
+      setToggledStyle({ 'display': 'none' })
     }
   }
 
@@ -31,18 +31,16 @@ const Toggleable = React.forwardRef((props, ref) => {
   })
 
   // Top Button (On by default)
-  const mainButtonStyle = toggledStyle.display === "block" ? {"display" : "none"} : {"display": "block"}
+  const mainButtonStyle = toggledStyle.display === 'block' ? { 'display' : 'none' } : { 'display': 'block' }
 
   return (
     <>
       <button onClick={toggle} style ={mainButtonStyle}>{props.buttonPrompt}</button>
       <div style={toggledStyle}>
-          {props.children}
-          <button onClick={toggle}>Cancel</button>
+        {props.children}
+        <button onClick={toggle}>Cancel</button>
       </div>
-      
     </>
-    
   )
 })
 

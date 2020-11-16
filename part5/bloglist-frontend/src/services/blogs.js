@@ -24,7 +24,7 @@ const getAll = () => {
 
 /**
  * Queries the server to create a new blog entry
- * @param {*} newObject The blog object to create 
+ * @param {*} newObject The blog object to create
  */
 const create = async newObject => {
   const config = {
