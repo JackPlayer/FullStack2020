@@ -87,7 +87,22 @@ const App = () => {
         })
                 
     }
-
+  
+  const removeBlog = (blogObject) => {
+    blogService
+        .remove(blogObject)
+        .then((res) => {
+          setBlogs(blogs.filter((blog) => {
+            return blog.id !== blogObject.id
+          }))
+        })
+        .catch((err) => {
+          setErrorMessage(`Something went wrong trying to remove the new blog [${err.message}]`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+  }
   const renderLogin = () => {
     return (
       <>
@@ -120,7 +135,7 @@ const App = () => {
         <div id="blogs">
           <h2>Blogs</h2>
           {sortedBlogs.map(blog =>
-            <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
+            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removeBlog={removeBlog} username={user.username}/>
           )}
           <button onClick={handleLogout}>Logout</button>
         </div>
