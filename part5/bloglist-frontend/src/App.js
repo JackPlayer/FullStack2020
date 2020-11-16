@@ -51,7 +51,27 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogUser')
     setUser(null)
   }
-
+  const updateBlog = (updatedBlog) => {
+  
+     blogService.update(updatedBlog)
+      .then((returnedBlog) => {
+        console.log("returned blog", returnedBlog)
+        const newBlogs = blogs.map((blog) => {
+          return {
+            ...blog,
+            likes: (blog.id === returnedBlog.id) ? returnedBlog.likes : blog.likes
+          }
+        })
+        setBlogs(newBlogs)
+      })
+      .catch((err) => {
+        setErrorMessage(`Something went wrong trying to like the blog [${err.message}]`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+      })
+    
+  }
   const addBlog = (blogObject) => {
      
       blogService
@@ -100,7 +120,7 @@ const App = () => {
         <div id="blogs">
           <h2>Blogs</h2>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
           )}
           <button onClick={handleLogout}>Logout</button>
         </div>
