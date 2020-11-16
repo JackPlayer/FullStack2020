@@ -11,7 +11,6 @@ const Blog = ({ blog, updateBlog }) => {
   }
 
   const handleLike = (e) => {
-    console.log(blog.user);
     e.preventDefault()
     const updatedBlog = {
       ...blog,

@@ -55,7 +55,6 @@ const App = () => {
   
      blogService.update(updatedBlog)
       .then((returnedBlog) => {
-        console.log("returned blog", returnedBlog)
         const newBlogs = blogs.map((blog) => {
           return {
             ...blog,
@@ -110,6 +109,7 @@ const App = () => {
   }
 
   const renderBlogs = () => {
+    const sortedBlogs = blogs.sort((a, b) => -(a.likes - b.likes))
     return (
       <div>
         <h4><strong>{user.name}</strong> is logged in.</h4>
@@ -119,7 +119,7 @@ const App = () => {
         </Toggleable>
         <div id="blogs">
           <h2>Blogs</h2>
-          {blogs.map(blog =>
+          {sortedBlogs.map(blog =>
             <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
           )}
           <button onClick={handleLogout}>Logout</button>
