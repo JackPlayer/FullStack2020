@@ -1,4 +1,5 @@
 import React, {useState, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Toggleable Component allows its children to be toggled on and off
@@ -44,4 +45,12 @@ const Toggleable = React.forwardRef((props, ref) => {
     
   )
 })
+
+Toggleable.displayName = 'Toggleable'
+
 export default Toggleable
+
+Toggleable.propTypes = {
+  children: PropTypes.node.isRequired,
+  buttonPrompt: PropTypes.string.isRequired,
+}

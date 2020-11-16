@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Notification Component shows a notification when invoked and 
@@ -38,3 +39,8 @@ const Notification = ({ content, timeout}) => {
 }
 
 export default Notification
+
+Notification.propTypes = {
+  content: PropTypes.string.isRequired,
+  timeout: PropTypes.number.isRequired,
+}

@@ -1,5 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Toggleable from './Toggleable'
+
 
 /**
  * Blog component that represents one blog post
@@ -53,7 +56,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
     } 
     return
   }
-  
+
   return (
     <div style={blogStyle}>
       <h2 style={{textTransform: 'uppercase', textAlign: 'center'}}>{blog.title}</h2>
@@ -69,3 +72,10 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
 }
   
 export default Blog
+
+Blog.propTypes = {
+  blog: PropTypes.object,
+  updateBlog: PropTypes.func,
+  removeBlog: PropTypes.func,
+  username: PropTypes.string
+}

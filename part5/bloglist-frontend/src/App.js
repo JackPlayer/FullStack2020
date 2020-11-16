@@ -5,6 +5,7 @@ import Toggleable from './components/Toggleable'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
 
 /**
  * Frontend for Blog List Application
@@ -13,8 +14,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [error, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  
   
 
   /**
@@ -44,15 +44,13 @@ const App = () => {
    * Handles the login button press
    * @param {*} event The event handler of the button press
    */
-  const handleLogin = async (event) => {
+  const handleLogin = async (event, username, password) => {
     event.preventDefault()
     try {
       const user = await loginService.login({username, password})
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       setErrorMessage('Invalid Credentials')
       setTimeout(() => {
@@ -142,22 +140,8 @@ const App = () => {
    */
   const renderLogin = () => {
     return (
-      <>
-        <h2>
-          Login
-        </h2>
-        <form onSubmit={handleLogin}>
-          <label>Username</label>
-          <input type="text" value={username} name="Username" onChange = {({target}) => {setUsername(target.value)}}></input>
-          <br></br>
-          <label>Password</label>
-          <input type="password" value={password} name="Password" onChange = {({target}) => {setPassword(target.value)}}></input>
-          <br></br>
-          <button type="submit">Login</button>
-        </form>
-      </>
-    )
-      
+      <LoginForm login={handleLogin} />
+    ) 
   }
 
   /**

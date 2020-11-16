@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * BlogForm Component that contains the markup and functionality of
@@ -47,3 +48,7 @@ const BlogForm = ({createBlog}) => {
 }
 
 export default BlogForm
+
+BlogForm.propTypes = {
+  createBlog: PropTypes.func
+}
