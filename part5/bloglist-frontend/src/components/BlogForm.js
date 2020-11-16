@@ -1,11 +1,21 @@
 import React, {useState} from 'react'
 
+/**
+ * BlogForm Component that contains the markup and functionality of
+ * a create new blog form
+ * @param {*} props The properties passed to the component 
+ */
 const BlogForm = ({createBlog}) => {
   const [url, setURL] = useState('')
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
 
-  const addBlog = (e) => {
+  /**
+   * Handles the add blog button being pressed. Calls the create blog 
+   * prop function
+   * @param {*} e The event handler 
+   */
+  const handleAddBlog = (e) => {
     e.preventDefault()
 
     createBlog({
@@ -22,7 +32,7 @@ const BlogForm = ({createBlog}) => {
   return (
     <div id="create-blog">
         <h2>Create New</h2>
-        <form onSubmit={addBlog}>
+        <form onSubmit={handleAddBlog}>
           <label>Title: </label> <input type="text" value={title} onChange={({target}) => {setTitle(target.value)}}></input>
           <br></br>
           <label>Author: </label> <input type="text" value={author} onChange={({target}) => {setAuthor(target.value)}}></input>

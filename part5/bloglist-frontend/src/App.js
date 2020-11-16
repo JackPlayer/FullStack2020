@@ -6,6 +6,9 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+/**
+ * Frontend for Blog List Application
+ */
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
@@ -14,7 +17,14 @@ const App = () => {
   const [password, setPassword] = useState('')
   
 
+  /**
+   * Used to reference BlogForm toggle functionality
+   */
   const createFormRef = useRef()
+
+  /**
+   * Runs at the initial render
+   */
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -30,6 +40,10 @@ const App = () => {
     }
   }, [])
 
+  /**
+   * Handles the login button press
+   * @param {*} event The event handler of the button press
+   */
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -47,10 +61,20 @@ const App = () => {
     }
   }
 
+  /**
+   * Handles the logout button press
+   * @param {*} event Event handler for logout
+   */
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedBlogUser')
     setUser(null)
   }
+
+  /**
+   * Calls the server with a PUT request to update the blog entry
+   * Allows the likes to increment
+   * @param {*} updatedBlog The updated blog object
+   */
   const updateBlog = (updatedBlog) => {
   
      blogService.update(updatedBlog)
@@ -71,6 +95,11 @@ const App = () => {
       })
     
   }
+
+  /**
+   * Adds a new blog 
+   * @param {*} blogObject The new blog to add
+   */
   const addBlog = (blogObject) => {
      
       blogService
@@ -88,6 +117,10 @@ const App = () => {
                 
     }
   
+  /**
+   * Removes a blog
+   * @param {*} blogObject The blogObject (containing the correct id) to remove
+   */
   const removeBlog = (blogObject) => {
     blogService
         .remove(blogObject)
@@ -103,6 +136,10 @@ const App = () => {
           }, 5000)
         })
   }
+
+  /**
+   * Renders the login page
+   */
   const renderLogin = () => {
     return (
       <>
@@ -123,6 +160,9 @@ const App = () => {
       
   }
 
+  /**
+   * Renders the blog list page 
+   */
   const renderBlogs = () => {
     const sortedBlogs = blogs.sort((a, b) => -(a.likes - b.likes))
     return (
@@ -144,6 +184,9 @@ const App = () => {
     )
   }
 
+  /**
+   * Only renders the blog when logged in
+   */
   return (
     <div>
       {user === null ? renderLogin() : renderBlogs()}

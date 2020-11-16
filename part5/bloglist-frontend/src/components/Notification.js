@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from 'react'
 
+/**
+ * Notification Component shows a notification when invoked and 
+ * hides after timeout ms
+ * @param {*} props The props passed into the component 
+ */
 const Notification = ({ content, timeout}) => {
 
   const [style, setStyle] = useState( {
@@ -9,6 +14,10 @@ const Notification = ({ content, timeout}) => {
     'border': '3px solid black',
     'backgroundColor': '#BBB'
   })
+
+  /**
+   * Timeout is initiated when the first render occurs
+   */
   useEffect(() => {
     setTimeout(() => {
       const newStyle = {

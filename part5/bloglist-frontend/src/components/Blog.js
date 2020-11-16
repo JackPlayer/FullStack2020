@@ -1,6 +1,11 @@
 import React from 'react'
 import Toggleable from './Toggleable'
 
+/**
+ * Blog component that represents one blog post
+ * Includes markup for removing and updating (liking the blog)
+ * @param {} props The properties passed to the component
+ */
 const Blog = ({ blog, updateBlog, removeBlog, username }) => {
   const blogStyle = {
     padding: '1rem',
@@ -10,6 +15,10 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
     color: '#333',
   }
 
+  /**
+   * Handles the like button being pressed. Uses the updateBlog prop function
+   * @param {*} e The event handler 
+   */
   const handleLike = (e) => {
     e.preventDefault()
     const updatedBlog = {
@@ -20,6 +29,10 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
     updateBlog(updatedBlog)
   }
 
+  /**
+   * Handles the remove button being pressed. Uses the removeBlog prop function
+   * @param {*} e The event handler 
+   */
   const handleRemove = (e) => {
     e.preventDefault()
     if (window.confirm(`Press ok to confirm removal of ${blog.title} by ${blog.author}.`) ) {
@@ -27,6 +40,9 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
     }
   }
 
+  /**
+   * Renders the remove button if the logged in user matches the user who created the blog
+   */
   const renderRemoveButton = () => {
     if (blog && blog.user) {
       if (username === blog.user.username) {
@@ -37,6 +53,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
     } 
     return
   }
+  
   return (
     <div style={blogStyle}>
       <h2 style={{textTransform: 'uppercase', textAlign: 'center'}}>{blog.title}</h2>
