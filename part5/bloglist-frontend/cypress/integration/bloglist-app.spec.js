@@ -46,10 +46,31 @@ describe('Blog app', function () {
         username: "Tester",
         password: "test123"
       }
+
+      const newBlog = {
+        url: 'www.southpark.com',
+        author: 'Randy',
+        title: 'South Park'
+      }
+
+      // First get login credentials
       cy.request('POST', 'http://localhost:3001/api/login', credentials)
         .then((res) => {
           localStorage.setItem('loggedBlogUser', JSON.stringify(res.body))
           cy.visit('http://localhost:3000')
+        })
+        .then((res) => { // Then send in a new blog
+          cy.request({
+            url: 'http://localhost:3001/api/blogs',
+            method: 'POST',
+            body: newBlog, 
+            headers: {
+              'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogUser')).token}`
+            }
+          })
+          .then((res) => {
+            cy.visit('http://localhost:3000')
+          })
         })
     })
 
@@ -61,8 +82,15 @@ describe('Blog app', function () {
 
       cy.contains('button', 'Create').click()
 
-      cy.get('.blog-title')
-      cy.get('.blog-author')
+      cy.contains('New Blog')
+      cy.contains('Jack P')
+    })
+
+    it('Can like a blog', function(){
+      cy.contains('button', 'View').click()
+      cy.contains('Likes: 0')
+      cy.contains('button', 'Like').click()
+      cy.contains("Likes: 1")
     })
   })
 })
