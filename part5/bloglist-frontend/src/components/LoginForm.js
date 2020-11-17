@@ -23,7 +23,7 @@ const LoginForm = ({ login }) => {
       <h2>
         Login
       </h2>
-      <form onSubmit={handleLogin}>
+      <form id="login-form" onSubmit={handleLogin}>
         <label>Username</label>
         <input type="text" value={username} name="Username"  onChange = {({ target }) => {setUsername(target.value)}}></input>
         <br></br>
