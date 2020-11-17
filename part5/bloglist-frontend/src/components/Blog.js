@@ -63,7 +63,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
       <p className="blog-author" style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
       <Toggleable buttonPrompt="View">
         <p className="blog-url">URL: {blog.url}</p>
-        <p className="blog-likes">Likes: {blog.likes}</p> <button style={{ display: 'inline-block' }} onClick={handleLike}>Like</button>
+        <p className="blog-likes">Likes: {blog.likes}</p> <button className="btn-like" style={{ display: 'inline-block' }} onClick={handleLike}>Like</button>
         {renderRemoveButton()}
       </Toggleable>
     </div>

@@ -51,4 +51,16 @@ describe('<Blog />', () => {
     expect(likes).toHaveTextContent('1000')
 
   })
+
+  test('like button pressed twice', () => {
+    const viewButton = component.container.querySelector('button')
+    fireEvent.click(viewButton)
+
+    const likeButton = component.getByText("Like")
+
+    fireEvent.click(likeButton)
+    fireEvent.click(likeButton)
+
+    expect(mockUpdate.mock.calls).toHaveLength(2)
+  })
 })
