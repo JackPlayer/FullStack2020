@@ -25,10 +25,10 @@ const LoginForm = ({ login }) => {
       </h2>
       <form id="login-form" onSubmit={handleLogin}>
         <label>Username</label>
-        <input type="text" value={username} name="Username"  onChange = {({ target }) => {setUsername(target.value)}}></input>
+        <input type="text" value={username} name="Username"  id="username" onChange = {({ target }) => {setUsername(target.value)}}></input>
         <br></br>
         <label>Password</label>
-        <input type="password" value={password} name="Password" onChange = {({ target }) => {setPassword(target.value)}}></input>
+        <input type="password" value={password} name="Password" id="password" onChange = {({ target }) => {setPassword(target.value)}}></input>
         <br></br>
         <button type="submit">Login</button>
       </form>
