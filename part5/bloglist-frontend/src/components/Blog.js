@@ -59,8 +59,8 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
 
   return (
     <div style={blogStyle}>
-      <h2 style={{ textTransform: 'uppercase', textAlign: 'center' }}>{blog.title}</h2>
-      <p style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
+      <h2 className="blog-title" style={{ textTransform: 'uppercase', textAlign: 'center' }}>{blog.title}</h2>
+      <p className="blog-author" style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
       <Toggleable buttonPrompt="View">
         <p>URL: {blog.url}</p>
         <p>Likes: {blog.likes}</p> <button style={{ display: 'inline-block' }} onClick={handleLike}>Like</button>
