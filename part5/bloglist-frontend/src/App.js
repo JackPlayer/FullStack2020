@@ -53,9 +53,7 @@ const App = () => {
       setUser(user)
     } catch (exception) {
       setErrorMessage('Invalid Credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      
     }
   }
 
@@ -88,9 +86,7 @@ const App = () => {
       })
       .catch((err) => {
         setErrorMessage(`Something went wrong trying to like the blog [${err.message}]`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+        
       })
 
   }
@@ -109,11 +105,12 @@ const App = () => {
       })
       .catch((err) => {
         setErrorMessage(`Something went wrong trying to add the new blog [${err.message}]`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
       })
 
+  }
+
+  const notificationTimeout = () => {
+    setErrorMessage("")
   }
 
   /**
@@ -130,9 +127,7 @@ const App = () => {
       })
       .catch((err) => {
         setErrorMessage(`Something went wrong trying to remove the new blog [${err.message}]`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+        
       })
   }
 
@@ -175,7 +170,7 @@ const App = () => {
   return (
     <div>
       {user === null ? renderLogin() : renderBlogs()}
-      {error && <Notification content={error} timeout={5000}/>}
+      {error && <Notification timeoutFunc={notificationTimeout} content={error} timeout={5000}/>}
     </div>
   )
 

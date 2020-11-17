@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -6,29 +6,24 @@ import PropTypes from 'prop-types'
  * hides after timeout ms
  * @param {*} props The props passed into the component
  */
-const Notification = ({ content, timeout }) => {
+const Notification = ({ content, timeout, timeoutFunc }) => {
 
-  const [style, setStyle] = useState( {
+  const style = {
     'width': '100%',
     'padding': '2rem',
     'color': 'black',
     'border': '3px solid black',
-    'backgroundColor': '#BBB'
-  })
+    'backgroundColor': '#BBB',
+  }
 
   /**
-   * Timeout is initiated when the first render occurs
+   * called when the component is updated
    */
   useEffect(() => {
     setTimeout(() => {
-      const newStyle = {
-        ...style,
-        'display': 'none'
-      }
-
-      setStyle(newStyle)
+      timeoutFunc()
     }, timeout)
-  }, [style, timeout])
+  }, [timeoutFunc, timeout])
 
 
   return (
@@ -43,4 +38,5 @@ export default Notification
 Notification.propTypes = {
   content: PropTypes.string.isRequired,
   timeout: PropTypes.number.isRequired,
+  
 }
