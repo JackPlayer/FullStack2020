@@ -28,7 +28,27 @@ describe('<Blog />', () => {
 
     expect(author).toHaveTextContent('JPlay')
     expect(title).toHaveTextContent('Blog Test')
+  })
 
+  test('Does not render likes and url by default', () => {
+    const likes = component.container.querySelector(".blog-likes")
+    const url = component.container.querySelector(".blog-url")
+
+    expect(likes).toBeNull()
+    expect(url).toBeNull()
+  })
+
+  test('url and likes render when view button pressed', () => {
+    const viewButton = component.container.querySelector('button')
+
+    fireEvent.click(viewButton)
+    const toggleDiv = component.container.querySelector('.toggleableDiv')
+    const likes = component.container.querySelector(".blog-likes")
+    const url = component.container.querySelector(".blog-url")
+
+    expect(toggleDiv).toHaveStyle("display: block")
+    expect(url).toHaveTextContent('www.test.com')
+    expect(likes).toHaveTextContent('1000')
 
   })
 })
