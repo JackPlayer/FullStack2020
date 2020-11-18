@@ -92,5 +92,12 @@ describe('Blog app', function () {
       cy.contains('button', 'Like').click()
       cy.contains("Likes: 1")
     })
+
+    it('Can delete a blog', function() {
+      
+      cy.contains('button', 'View').click()
+      cy.contains('button', 'Remove').click()
+      cy.get('body').should('not.contain', "SOUTH PARK")
+    })
   })
 })
