@@ -12,23 +12,23 @@ describe('<BlogForm />', () => {
 
     component = render(<BlogForm createBlog={mockCreate} />)
   })
-  test('Function is called with correct values when submit is clicked', () =>{
-    const inputs = component.container.querySelectorAll("input")
-    const form = component.container.querySelector("form")
+  test('Function is called with correct values when submit is clicked', () => {
+    const inputs = component.container.querySelectorAll('input')
+    const form = component.container.querySelector('form')
     const title = inputs[0]
     const author = inputs[1]
     const url = inputs[2]
 
     fireEvent.change(title, {
-      target:{value: "new title"}
+      target:{ value: 'new title' }
     })
 
     fireEvent.change(author, {
-      target:{value: "new author"}
+      target:{ value: 'new author' }
     })
 
     fireEvent.change(url, {
-      target:{value: "new url"}
+      target:{ value: 'new url' }
     })
 
     fireEvent.submit(form)

@@ -53,7 +53,7 @@ const App = () => {
       setUser(user)
     } catch (exception) {
       setErrorMessage('Invalid Credentials')
-      
+
     }
   }
 
@@ -86,7 +86,7 @@ const App = () => {
       })
       .catch((err) => {
         setErrorMessage(`Something went wrong trying to like the blog [${err.message}]`)
-        
+
       })
 
   }
@@ -110,7 +110,7 @@ const App = () => {
   }
 
   const notificationTimeout = () => {
-    setErrorMessage("")
+    setErrorMessage('')
   }
 
   /**
@@ -127,7 +127,7 @@ const App = () => {
       })
       .catch((err) => {
         setErrorMessage(`Something went wrong trying to remove the new blog [${err.message}]`)
-        
+
       })
   }
 

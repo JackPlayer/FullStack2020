@@ -38,5 +38,4 @@ export default Notification
 Notification.propTypes = {
   content: PropTypes.string.isRequired,
   timeout: PropTypes.number.isRequired,
-  
 }
