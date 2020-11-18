@@ -36,7 +36,7 @@ const Toggleable = React.forwardRef((props, ref) => {
   const shouldRenderChildren = toggledStyle.display === "block" 
   return (
     <>
-      <button onClick={toggle} style ={mainButtonStyle}>{props.buttonPrompt}</button>
+      <button onClick={toggle} className="btn-toggle" style ={mainButtonStyle}>{props.buttonPrompt}</button>
       <div style={toggledStyle} className="toggleableDiv">
         {shouldRenderChildren && props.children}
         {shouldRenderChildren && <button onClick={toggle}>Cancel</button> }

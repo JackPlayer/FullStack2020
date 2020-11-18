@@ -58,7 +58,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div className="blog" style={blogStyle}>
       <h2 className="blog-title" style={{ textTransform: 'uppercase', textAlign: 'center' }}>{blog.title}</h2>
       <p className="blog-author" style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
       <Toggleable buttonPrompt="View">

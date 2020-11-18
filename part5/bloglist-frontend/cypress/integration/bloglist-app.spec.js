@@ -47,10 +47,17 @@ describe('Blog app', function () {
         password: "test123"
       }
 
-      const newBlog = {
+      const newBlogOne = {
+        url: 'www.southpark.com',
+        author: 'Cartman',
+        title: 'Respect My Authority',
+        likes: 5,
+      }
+      const newBlogTwo = {
         url: 'www.southpark.com',
         author: 'Randy',
-        title: 'South Park'
+        title: 'South Park',
+        likes: 200,
       }
 
       // First get login credentials
@@ -63,13 +70,24 @@ describe('Blog app', function () {
           cy.request({
             url: 'http://localhost:3001/api/blogs',
             method: 'POST',
-            body: newBlog, 
+            body: newBlogOne, 
             headers: {
               'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogUser')).token}`
             }
           })
           .then((res) => {
-            cy.visit('http://localhost:3000')
+            cy.request({
+              url: 'http://localhost:3001/api/blogs',
+              method: 'POST',
+              body: newBlogTwo, 
+              headers: {
+                'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogUser')).token}`
+              }
+            })
+            .then((res) => {
+              cy.visit('http://localhost:3000')
+            })
+            
           })
         })
     })
@@ -88,16 +106,26 @@ describe('Blog app', function () {
 
     it('Can like a blog', function(){
       cy.contains('button', 'View').click()
-      cy.contains('Likes: 0')
+      cy.contains('Likes: 200')
       cy.contains('button', 'Like').click()
-      cy.contains("Likes: 1")
+      cy.contains("Likes: 201")
     })
 
     it('Can delete a blog', function() {
-      
       cy.contains('button', 'View').click()
       cy.contains('button', 'Remove').click()
       cy.get('body').should('not.contain', "SOUTH PARK")
+    })
+
+    it('Blogs are in correct order', function() {
+      cy.get(".blog .btn-toggle").click({multiple: true})
+
+      cy.get(".blog .blog-likes").then((items) => {
+        expect(items[0]).to.contain.text('Likes: 200')
+        expect(items[1]).to.contain.text('Likes: 5')
+      })
+      
+        
     })
   })
 })
