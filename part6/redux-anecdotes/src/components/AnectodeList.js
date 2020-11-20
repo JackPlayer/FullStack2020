@@ -7,7 +7,7 @@ const Anecdote = ({content, votes, id}) => {
   const dispatch = useDispatch()
 
   const vote = (id) => {
-    dispatch(voteFor(id))
+    dispatch(voteFor(id, { votes: votes + 1}))
     dispatch(newNotification(`Voted for ${content}`))
     setTimeout(() => {
       dispatch(removeNotification())
