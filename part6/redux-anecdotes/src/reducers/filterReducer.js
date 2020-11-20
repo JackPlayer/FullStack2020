@@ -1,6 +1,6 @@
 const filterReducer = (state = "", action) => {
   switch(action.type) {
-    case 'SET':
+    case 'SET_FILTER':
       const newState = action.data.filter
       return newState
     default: 
@@ -10,7 +10,7 @@ const filterReducer = (state = "", action) => {
 
 export const updateFilter = (filter) => {
   return {
-    type: 'SET',
+    type: 'SET_FILTER',
     data: { filter }
   }
 }
