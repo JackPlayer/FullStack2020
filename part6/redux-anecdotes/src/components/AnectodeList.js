@@ -32,7 +32,6 @@ const AnecdoteList = () => {
   })
  
   const sortedByVotesAnecdotes = anecdotes.sort((a, b) => b.votes - a.votes)
-
   const anecdotesRender = sortedByVotesAnecdotes.map((anecdote) => <Anecdote key={anecdote.id} content={anecdote.content} id={anecdote.id} votes={anecdote.votes} />)
   
   return (
