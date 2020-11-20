@@ -13,10 +13,8 @@ const AnecdoteForm = () => {
 
     if (input && input.length > 0) {
       dispatch(addNew(input))
-      dispatch(newNotification(`Created new anecdote: ${input}`))
-      setTimeout(() => {
-        dispatch(removeNotification())
-      }, 5000)
+      dispatch(newNotification(`Created new anecdote: ${input}`, 5))
+      event.target['newInput'].value = ""
     }
   }
 
