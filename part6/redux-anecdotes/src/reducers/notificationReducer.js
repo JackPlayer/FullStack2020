@@ -1,7 +1,6 @@
 const notificationReducer = (state = "", action) => {
   switch(action.type) {
     case 'NEW_NOTIFICATION':
-      console.log("new notification", action.data)
       const newState = action.data.notification
       return newState
     case 'REMOVE_NOTIFICATION':
