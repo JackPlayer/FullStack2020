@@ -1,3 +1,4 @@
+import anecdoteService from '../services/anecdoteService'
 
 const asObject = (anecdote) => {
   return {
@@ -43,10 +44,13 @@ export const addNew = (anecdote) => {
   }
 }
 
-export const initialize = (anecdotes) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data: anecdotes
+export const initialize = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch ({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes
+    })
   }
 }
 
