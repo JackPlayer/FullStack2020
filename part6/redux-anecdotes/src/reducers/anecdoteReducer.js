@@ -45,7 +45,6 @@ export const voteFor = (id) => {
 }
 
 export const addNew = (content) => {
-  console.log("adding new")
   return {
     type: 'NEW_ANECDOTE',
     data: asObject(content)

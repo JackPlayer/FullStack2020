@@ -17,7 +17,7 @@ export const newNotification = (notification) => {
   }
 }
 
-export const removeNotification = (notification) => {
+export const removeNotification = () => {
   return {
     type: 'REMOVE'
   }
