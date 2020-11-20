@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import { voteFor } from '../reducers/anecdoteReducer'
 import { newNotification } from '../reducers/notificationReducer'
 
+/**
+ * Anecodte React Component
+ * Consists of the anecdote content, number of votes and a vote button
+ */
 const Anecdote = (props) => {
   const {id, votes, content, voteDispatch, notificationDispatch } = props;
   const vote = (id) => {
@@ -22,6 +26,11 @@ const Anecdote = (props) => {
     </div>
   )
 }
+
+/**
+ * AnecdoteList React component
+ * Consists of a list of Anecdote components
+ */
 const AnecdoteList = (props) => {
   const anecdotes = props.anecdotes.filter((anecdote) => anecdote.content.includes(props.filter))
 
@@ -39,6 +48,7 @@ const mapDispatchToProps  = {
     voteFor,
     newNotification,
 }
+
 const mapStateToProps = (state) => {
   return {
     anecdotes: state.anecdotes,

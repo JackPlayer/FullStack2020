@@ -1,3 +1,8 @@
+/**
+ * AnecdoteForm ReactJS Component
+ * A form to create and add a new anecdote
+ */
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { addNew } from '../reducers/anecdoteReducer'

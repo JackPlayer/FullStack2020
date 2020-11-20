@@ -1,3 +1,6 @@
+/**
+ * Main App Component 
+ */
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { initialize } from './reducers/anecdoteReducer'
@@ -9,6 +12,7 @@ import Filter from './components/Filter'
 const App = () => {
   const dispatch = useDispatch()
 
+  // On first render intializes the state for redux
   useEffect(() => {
     dispatch(initialize())
   }, [dispatch])

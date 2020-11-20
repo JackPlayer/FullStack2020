@@ -2,6 +2,9 @@ import anecdoteService from '../services/anecdoteService'
 
 const initialState = []
 
+/**
+ * Redux anecdote reducer
+ */
 const anecdoteReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'VOTE':
@@ -22,6 +25,10 @@ const anecdoteReducer = (state = initialState, action) => {
   }
 }
 
+/**
+ * Increases the vote count by 1 for the id specified
+ * Calls the modify service for db access
+ */
 export const voteFor = (id, modification) => {
   return async dispatch => {
     const response = await anecdoteService.modify(id, modification)
@@ -32,6 +39,10 @@ export const voteFor = (id, modification) => {
   }
 }
 
+/**
+ * Adds a new anecdote 
+ * Calls the createNew anecdote service for db access
+ */
 export const addNew = (anecdote) => {
   return async dispatch => {
     const response = await anecdoteService.createNew(anecdote)
@@ -42,6 +53,9 @@ export const addNew = (anecdote) => {
   }
 }
 
+/**
+ * Initializes the anecdotes by using anecdote service to get anecdotes stored in db
+ */
 export const initialize = () => {
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()

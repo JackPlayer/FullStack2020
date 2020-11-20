@@ -1,3 +1,6 @@
+/**
+ * Redux notification reducer
+ */
 const notificationReducer = (state = "", action) => {
   switch(action.type) {
     case 'NEW_NOTIFICATION':
@@ -10,6 +13,9 @@ const notificationReducer = (state = "", action) => {
   }
 }
 
+/**
+ * Creates a new notification that lasts for a specified timeout
+ */
 export const newNotification = (notification, timeout) => {
   return async (dispatch, getState) => {
     dispatch ({
@@ -25,6 +31,9 @@ export const newNotification = (notification, timeout) => {
   }
 }
 
+/**
+ * Removes the notification 
+ */
 export const removeNotification = () => {
   return {
     type: 'REMOVE_NOTIFICATION'

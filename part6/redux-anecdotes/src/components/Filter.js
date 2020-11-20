@@ -1,3 +1,7 @@
+/**
+ * Filter React component
+ * filter input that has onChange functionality
+ */
 import React from 'react'
 import { connect } from 'react-redux'
 import { updateFilter } from '../reducers/filterReducer'
