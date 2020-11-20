@@ -1,13 +1,5 @@
 import anecdoteService from '../services/anecdoteService'
 
-const asObject = (anecdote) => {
-  return {
-    content: anecdote.content,
-    id: anecdote.id,
-    votes: 0
-  }
-}
-
 const initialState = []
 
 const anecdoteReducer = (state = initialState, action) => {
@@ -38,9 +30,12 @@ export const voteFor = (id) => {
 }
 
 export const addNew = (anecdote) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: asObject(anecdote)
+  return async dispatch => {
+    const response = await anecdoteService.createNew(anecdote)
+    dispatch ({
+      type: 'NEW_ANECDOTE',
+      data: response
+    })
   }
 }
 
