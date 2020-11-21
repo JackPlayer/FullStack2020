@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { 
-Switch, Route, Link, useRouteMatch 
+Switch, Route, Link, useRouteMatch, useHistory 
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -29,6 +29,8 @@ const Anecdote = ({ anecdote }) => {
   return (
     <div>
       <h2>{anecdote.content}</h2>
+      <p>Author: {anecdote.author}</p>
+      <p>Info: {anecdote.info}</p>
       <p>has {anecdote.votes} votes</p>
     </div>
   )
@@ -70,6 +72,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    
   }
 
   return (
@@ -95,6 +98,16 @@ const CreateNew = (props) => {
 
 }
 
+const Notification = ({notification}) => {
+ const style = {
+    color: '#429cf5'
+  }
+
+  return (
+    notification && <p className="notification" style={style}>* {notification} *</p>
+  )
+}
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -102,29 +115,38 @@ const App = () => {
       author: 'Jez Humble',
       info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
       votes: 0,
-      id: 1
+      id: '1'
     },
     {
       content: 'Premature optimization is the root of all evil',
       author: 'Donald Knuth',
       info: 'http://wiki.c2.com/?PrematureOptimization',
       votes: 0,
-      id: 2
+      id: '2'
     }
   ])
-
+  
   const [notification, setNotification] = useState('')
 
+
+  const history = useHistory()
+  const anecdoteById = (id) =>
+    anecdotes.find(a => a.id === id)
+  
   const match = useRouteMatch('/anecdotes/:id')
-  const anecdote = match ? anecdotes.find(x => x.id === Number(match.params.id) ) : null
+  const anecdote = match ? anecdoteById(match.params.id) : null
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    history.push('/')
+    setNotification(`Added Anecdote: ${anecdote.content}`)
+    setTimeout(() => {
+      setNotification("")
+    }, 10000)
   }
 
-  const anecdoteById = (id) =>
-    anecdotes.find(a => a.id === id)
+  
 
   const vote = (id) => {
     const anecdote = anecdoteById(id)
@@ -141,7 +163,9 @@ const App = () => {
     <div>
       
       <h1>Software anecdotes</h1>
+      
       <Menu />
+      <Notification notification={notification} />
       <Switch>
         <Route path="/about">
           <About />
