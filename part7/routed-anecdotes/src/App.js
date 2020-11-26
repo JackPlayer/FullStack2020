@@ -66,9 +66,6 @@ const CreateNew = (props) => {
   const info = useField('text')
 
   const handleSubmit = (e) => {
-    console.log(content)
-    console.log(author)
-    console.log(info)
     e.preventDefault()
     props.addNew({
       content: content.value,
@@ -76,7 +73,12 @@ const CreateNew = (props) => {
       info: info.value,
       votes: 0
     })
-    
+  }
+
+  const handleReset = () => {
+    content.reset()
+    author.reset()
+    info.reset()
   }
 
   return (
@@ -89,13 +91,14 @@ const CreateNew = (props) => {
         </div>
         <div>
           author
-          <input name='author' {...author} />
+          <input name='author' value={author.value} type={author.type} onChange={author.onChange} />
         </div>
         <div>
           url for more info
-          <input name='info' {...info} />
+          <input name='info' value={info.value} type={info.type} onChange={info.onChange} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button type="button" onClick={handleReset}>reset</button>
       </form>
     </div>
   )

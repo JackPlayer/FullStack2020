@@ -4,11 +4,14 @@ export const useField = (type) => {
   const [value, setValue] = useState('')
 
   const onChange = (e) => {
-    console.log("new value")
     setValue(e.target.value)
   }
 
+  const reset = (e) => {
+    setValue('')
+  }
+
   return {
-    type, value, onChange
+    type, value, onChange, reset
   }
 }
