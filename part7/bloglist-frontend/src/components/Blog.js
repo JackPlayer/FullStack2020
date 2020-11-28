@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ const Blog = ({ blog }) => {
   const history = useHistory()
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const [commentEntry, setComment] = useState('')
 
   /**
    * Handles the like button being pressed. Uses the updateBlog prop function
@@ -24,7 +25,7 @@ const Blog = ({ blog }) => {
     e.preventDefault()
     const updatedBlog = {
       ...blog,
-      user: (blog.user !== null) ? blog.user.id : null,
+      user: blog.user.id,
       likes: blog.likes + 1
     }
     dispatch(updateBlog(updatedBlog))
@@ -40,6 +41,20 @@ const Blog = ({ blog }) => {
       dispatch(removeBlog(blog.id))
       history.push('/')
     }
+  }
+
+  const handleAddComment = (e) => {
+    e.preventDefault()
+    const comment = {
+      content: commentEntry,
+    }
+    const newCommentBlog = {
+      ...blog,
+      user: blog.user.id,
+      comments: blog.comments.concat(comment)
+    }
+    dispatch(updateBlog(newCommentBlog))
+    setComment('')
   }
 
   /**
@@ -60,16 +75,35 @@ const Blog = ({ blog }) => {
     }
     return
   }
+  console.log(blog)
+  const renderComments = () => {
+    if (blog.comments) {
+      return (
+        <div className="comments">
+          <h3>Comments</h3>
+          <form onSubmit={handleAddComment}>
+            <input value={commentEntry} type="text" name="add-comment" onChange={({ target }) => {setComment(target.value)}}></input>
+            <button type="submit">Add Comment</button>
+          </form>
+          <ul>
+            {blog.comments.map((comment) => <li key={comment.id}>{comment.content}</li>)}
+          </ul>
+        </div>
+      )
+    }
+    return null
+  }
 
   return (
-    <div className="blog">
+    blog &&
+    ( <div className="blog">
       <h2 className="blog-title">{blog.title}</h2>
       <p className="blog-url"><a href={blog.url}>{blog.url}</a></p>
       <p className="blog-likes">{blog.likes} likes</p> <button className="btn-like" onClick={handleLike}>Like</button>
       <p className="blog-author">Author {blog.author}</p>
-
+      {renderComments()}
       {renderRemoveButton()}
-    </div>
+    </div>)
   )
 
 }

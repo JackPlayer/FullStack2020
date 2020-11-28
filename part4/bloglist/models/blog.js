@@ -2,7 +2,11 @@
 const mongoose = require('mongoose')
 
 mongoose.set('useFindAndModify', false)
-
+const commentSchema = new mongoose.Schema({
+  content: {
+    type: String,
+  },
+})
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -14,6 +18,7 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   likes: Number,
+  comments: [commentSchema],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

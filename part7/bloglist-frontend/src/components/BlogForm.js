@@ -28,7 +28,7 @@ const BlogForm = () => {
     const userObj = {
       username: user.username
     }
-    dispatch(addNewBlog({ url, title, author, likes: 0, user: userObj }))
+    dispatch(addNewBlog({ url, title, author, likes: 0, user: userObj, comments: [] }))
 
     setAuthor('')
     setTitle('')
