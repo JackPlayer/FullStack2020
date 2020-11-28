@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNewBlog } from '../reducers/blogReducer'
 import PropTypes from 'prop-types'
-import Toggleable from './Toggleable'
 
 /**
  * BlogForm Component that contains the markup and functionality of
