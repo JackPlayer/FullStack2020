@@ -86,7 +86,7 @@ const Blog = ({ blog }) => {
         <div className="comments">
           <h3>Comments</h3>
           <ul>
-            {blog.comments.map((comment) => <li key={comment.id}>{comment.content}</li>)}
+            {blog.comments.map((comment) => <li key={comment.content}>{comment.content}</li>)}
           </ul>
           <form onSubmit={handleAddComment}>
             <div className="field">
@@ -101,22 +101,34 @@ const Blog = ({ blog }) => {
     return null
   }
 
+  const renderBlog = () => {
+    console.log(blog)
+    if (blog !== undefined) {
+      return (
+        <div className="blog content container section">
+          <h2 className="blog-title">{blog.title}</h2>
+          <p className="blog-url"><a href={blog.url}>{blog.url}</a></p>
+          <div className="blog-likes">
+            <p>{blog.likes} likes</p>
+            <button className="button is-small is-success" onClick={handleLike}>
+              <span className="icon is-small"><i className="far fa-thumbs-up"></i></span>
+              <span>Like</span>
+            </button>
+          </div>
+          <p className="blog-author">Author {blog.author}</p>
+          {renderComments()}
+          {renderRemoveButton()}
+        </div>
+      )
+    } else {
+      history.push('/')
+    }
+  }
+
   return (
-    blog &&
-    ( <div className="blog content container section">
-      <h2 className="blog-title">{blog.title}</h2>
-      <p className="blog-url"><a href={blog.url}>{blog.url}</a></p>
-      <div className="blog-likes">
-        <p>{blog.likes} likes</p>
-        <button className="button is-small is-success" onClick={handleLike}>
-          <span className="icon is-small"><i className="far fa-thumbs-up"></i></span>
-          <span>Like</span>
-        </button>
-      </div>
-      <p className="blog-author">Author {blog.author}</p>
-      {renderComments()}
-      {renderRemoveButton()}
-    </div>)
+    <>
+      { renderBlog() }
+    </>
   )
 
 }
