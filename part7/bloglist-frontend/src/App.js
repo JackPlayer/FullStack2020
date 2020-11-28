@@ -4,7 +4,13 @@ import { setUser } from './reducers/userReducer'
 
 import BlogPage from './components/BlogPage'
 import LoginPage from './components/LoginPage'
+import Header from './components/Header'
 import { BrowserRouter as Router } from 'react-router-dom'
+
+import 'bulma/bulma.sass'
+import './styles/style.scss'
+import Footer from './components/Footer'
+
 
 /**
  * Frontend for Blog List Application
@@ -36,7 +42,9 @@ const App = () => {
   }
   return (
     <div>
+      <Header />
       {renderApp()}
+      <Footer />
     </div>
   )
 

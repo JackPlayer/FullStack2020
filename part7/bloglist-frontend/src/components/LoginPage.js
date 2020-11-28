@@ -24,20 +24,22 @@ const LoginPage = () => {
   }
 
   return (
-    <>
+    <div className="container section">
       <h2>
         Login
       </h2>
       <form id="login-form" onSubmit={handleLogin}>
-        <label>Username</label>
-        <input type="text" value={username} name="Username"  id="username" onChange = {({ target }) => {setUsername(target.value)}}></input>
-        <br></br>
-        <label>Password</label>
-        <input type="password" value={password} name="Password" id="password" onChange = {({ target }) => {setPassword(target.value)}}></input>
-        <br></br>
-        <button type="submit">Login</button>
+        <div className="field">
+          <label className="label">Username</label>
+          <input className="input" type="text" value={username} name="Username"  id="username" onChange = {({ target }) => {setUsername(target.value)}}></input>
+        </div>
+        <div className="field">
+          <label className="label">Password</label>
+          <input className="input" type="password" value={password} name="Password" id="password" onChange = {({ target }) => {setPassword(target.value)}}></input>
+        </div>
+        <button className="button is-link" type="submit">Login</button>
       </form>
-    </>
+    </div>
   )
 }
 

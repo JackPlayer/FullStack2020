@@ -43,10 +43,17 @@ const BlogPage = () => {
     dispatch(setUser(null))
   }
 
+  const renderLogout = () => {
+    return (
+      <div className="logout">
+        <p><strong>{user.name}</strong> is logged in</p>
+        <button className="button is-warning is-light is-small" onClick={handleLogout}>Logout</button>
+      </div>
+    )
+  }
   return (
     <div id="blog-page">
       <Navigation />
-      <h4><strong>{user.name}</strong> is logged in.</h4>
       <Switch>
         <Route path="/create">
           <BlogForm />
@@ -64,7 +71,7 @@ const BlogPage = () => {
           <BlogList />
         </Route>
       </Switch>
-      <button onClick={handleLogout}>Logout</button>
+      {renderLogout()}
     </div>
   )
 }

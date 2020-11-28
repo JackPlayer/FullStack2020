@@ -37,16 +37,19 @@ const BlogForm = () => {
   }
 
   return (
-    <div id="create-blog">
+    <div id="create-blog" className="content container section">
       <h2>Create New</h2>
       <form onSubmit={handleAddBlog}>
-        <label>Title: </label> <input id="input-title" type="text" value={title} onChange={({ target }) => {setTitle(target.value)}}></input>
-        <br></br>
-        <label>Author: </label> <input id="input-author" type="text" value={author} onChange={({ target }) => {setAuthor(target.value)}}></input>
-        <br></br>
-        <label>URL: </label> <input type="text" id="input-url" value={url} onChange={({ target }) => {setURL(target.value)}}></input>
-        <br></br>
-        <button type="submit">Create</button>
+        <div className="field">
+          <label className="label">Title </label> <input className="input" id="input-title" type="text" value={title} onChange={({ target }) => {setTitle(target.value)}}></input>
+        </div>
+        <div className="field">
+          <label className="label">Author </label> <input className="input" id="input-author" type="text" value={author} onChange={({ target }) => {setAuthor(target.value)}}></input>
+        </div>
+        <div className="field">
+          <label className="label">URL </label> <input className="input" type="text" id="input-url" value={url} onChange={({ target }) => {setURL(target.value)}}></input>
+        </div>
+        <button className="button is-link" type="submit">Create</button>
       </form>
     </div>
 
