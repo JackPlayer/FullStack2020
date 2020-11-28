@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from '../reducers/blogReducer'
 import { setUser } from '../reducers/userReducer'
+import { initializeUsers } from '../reducers/usersReducer'
+
 
 import BlogForm from './BlogForm'
 import BlogList from './BlogList'
+import Users from './Users'
 
 /**
  * BlogPage Component that contains the markup and functionality of
@@ -16,6 +19,7 @@ const BlogPage = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [dispatch])
 
 
@@ -33,6 +37,7 @@ const BlogPage = () => {
       <h4><strong>{user.name}</strong> is logged in.</h4>
       <BlogForm />
       <BlogList />
+      <Users />
       <button onClick={handleLogout}>Logout</button>
     </div>
   )
