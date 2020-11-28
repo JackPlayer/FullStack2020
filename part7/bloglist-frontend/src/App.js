@@ -4,6 +4,7 @@ import { setUser } from './reducers/userReducer'
 
 import BlogPage from './components/BlogPage'
 import LoginPage from './components/LoginPage'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 /**
  * Frontend for Blog List Application
@@ -24,7 +25,11 @@ const App = () => {
 
   const renderApp = () => {
     if (user !== null) {
-      return <BlogPage />
+      return (
+        <Router>
+          <BlogPage />
+        </Router>
+      )
     } else {
       return <LoginPage />
     }

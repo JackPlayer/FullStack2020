@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from '../reducers/blogReducer'
 import { setUser } from '../reducers/userReducer'
 import { initializeUsers } from '../reducers/usersReducer'
 
 
+
 import BlogForm from './BlogForm'
 import BlogList from './BlogList'
 import Users from './Users'
+import Navigation from './Navigation'
 
 /**
  * BlogPage Component that contains the markup and functionality of
@@ -34,10 +37,19 @@ const BlogPage = () => {
 
   return (
     <div id="blog-page">
+      <Navigation />
       <h4><strong>{user.name}</strong> is logged in.</h4>
-      <BlogForm />
-      <BlogList />
-      <Users />
+      <Switch>
+        <Route path="/create">
+          <BlogForm />
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/">
+          <BlogList />
+        </Route>
+      </Switch>
       <button onClick={handleLogout}>Logout</button>
     </div>
   )
