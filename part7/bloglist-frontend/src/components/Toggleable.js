@@ -1,11 +1,11 @@
-import React, { useState, useImperativeHandle } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 /**
  * Toggleable Component allows its children to be toggled on and off
  * Contains props.children
  */
-const Toggleable = React.forwardRef((props, ref) => {
+const Toggleable = (props) => {
   const [toggledStyle, setToggledStyle] = useState({ 'display': 'none' })
 
   /**
@@ -21,14 +21,6 @@ const Toggleable = React.forwardRef((props, ref) => {
     }
   }
 
-  /**
-   * Gives parents the ability to control the toggle function
-   */
-  useImperativeHandle(ref, () => {
-    return {
-      toggle
-    }
-  })
 
   // Top Button (On by default)
   const mainButtonStyle = toggledStyle.display === 'block' ? { 'display' : 'none' } : { 'display': 'block' }
@@ -43,9 +35,7 @@ const Toggleable = React.forwardRef((props, ref) => {
       </div>
     </>
   )
-})
-
-Toggleable.displayName = 'Toggleable'
+}
 
 export default Toggleable
 

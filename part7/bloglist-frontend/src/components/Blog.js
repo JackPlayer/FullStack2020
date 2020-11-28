@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { removeBlog, updateBlog } from '../reducers/blogReducer'
 import Toggleable from './Toggleable'
 
 
@@ -9,14 +10,9 @@ import Toggleable from './Toggleable'
  * Includes markup for removing and updating (liking the blog)
  * @param {} props The properties passed to the component
  */
-const Blog = ({ blog, updateBlog, removeBlog, username }) => {
-  const blogStyle = {
-    padding: '1rem',
-    width: '20%',
-    marginTop: '20px',
-    backgroundColor: '#EEE',
-    color: '#333',
-  }
+const Blog = ({ blog }) => {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   /**
    * Handles the like button being pressed. Uses the updateBlog prop function
@@ -29,7 +25,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
       user: (blog.user !== null) ? blog.user.id : null,
       likes: blog.likes + 1
     }
-    updateBlog(updatedBlog)
+    dispatch(updateBlog(updatedBlog))
   }
 
   /**
@@ -39,7 +35,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
   const handleRemove = (e) => {
     e.preventDefault()
     if (window.confirm(`Press ok to confirm removal of ${blog.title} by ${blog.author}.`) ) {
-      removeBlog(blog)
+      dispatch(removeBlog(blog.id))
     }
   }
 
@@ -48,7 +44,14 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
    */
   const renderRemoveButton = () => {
     if (blog && blog.user) {
-      if (username === blog.user.username) {
+      console.log(user)
+      console.log(user.username)
+      if (user.id === blog.user) {
+        return (
+          <button onClick={handleRemove}>Remove Post</button>
+        )
+      }
+      if (user.username === blog.user.username) {
         return (
           <button onClick={handleRemove}>Remove Post</button>
         )
@@ -58,7 +61,7 @@ const Blog = ({ blog, updateBlog, removeBlog, username }) => {
   }
 
   return (
-    <div className="blog" style={blogStyle}>
+    <div className="blog">
       <h2 className="blog-title" style={{ textTransform: 'uppercase', textAlign: 'center' }}>{blog.title}</h2>
       <p className="blog-author" style={{ 'fontStyle': 'italic' }}>Author: {blog.author}</p>
       <Toggleable buttonPrompt="View">
@@ -75,7 +78,4 @@ export default Blog
 
 Blog.propTypes = {
   blog: PropTypes.object,
-  updateBlog: PropTypes.func,
-  removeBlog: PropTypes.func,
-  username: PropTypes.string
 }

@@ -25,6 +25,8 @@ export const login = (credentials) => {
   return async dispatch => {
     const response = await loginService.login(credentials)
     blogService.setToken(response.token)
+    window.localStorage.setItem('loggedBlogUser', JSON.stringify(response))
+
     dispatch ({
       type: 'LOGIN',
       data: response
@@ -36,6 +38,12 @@ export const login = (credentials) => {
  * Sets a new user
  */
 export const setUser = (user) => {
+  if ( user === null) {
+    window.localStorage.removeItem('loggedBlogUser')
+  } else {
+    blogService.setToken(user.token)
+  }
+
   return {
     type: 'SET_USER',
     data: user

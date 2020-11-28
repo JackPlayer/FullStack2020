@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addNewBlog } from '../reducers/blogReducer'
 import PropTypes from 'prop-types'
+import Toggleable from './Toggleable'
 
 /**
  * BlogForm Component that contains the markup and functionality of
  * a create new blog form
  * @param {*} props The properties passed to the component
  */
-const BlogForm = ({ createBlog }) => {
+const BlogForm = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
   const [url, setURL] = useState('')
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -19,11 +24,10 @@ const BlogForm = ({ createBlog }) => {
   const handleAddBlog = (e) => {
     e.preventDefault()
 
-    createBlog({
-      url,
-      title,
-      author,
-    })
+    const userObj = {
+      username: user.username
+    }
+    dispatch(addNewBlog({ url, title, author, likes: 0, user: userObj }))
 
     setAuthor('')
     setTitle('')
@@ -32,16 +36,18 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     <div id="create-blog">
-      <h2>Create New</h2>
-      <form onSubmit={handleAddBlog}>
-        <label>Title: </label> <input id="input-title" type="text" value={title} onChange={({ target }) => {setTitle(target.value)}}></input>
-        <br></br>
-        <label>Author: </label> <input id="input-author" type="text" value={author} onChange={({ target }) => {setAuthor(target.value)}}></input>
-        <br></br>
-        <label>URL: </label> <input type="text" id="input-url" value={url} onChange={({ target }) => {setURL(target.value)}}></input>
-        <br></br>
-        <button type="submit">Create</button>
-      </form>
+      <Toggleable buttonPrompt="Create New">
+        <h2>Create New</h2>
+        <form onSubmit={handleAddBlog}>
+          <label>Title: </label> <input id="input-title" type="text" value={title} onChange={({ target }) => {setTitle(target.value)}}></input>
+          <br></br>
+          <label>Author: </label> <input id="input-author" type="text" value={author} onChange={({ target }) => {setAuthor(target.value)}}></input>
+          <br></br>
+          <label>URL: </label> <input type="text" id="input-url" value={url} onChange={({ target }) => {setURL(target.value)}}></input>
+          <br></br>
+          <button type="submit">Create</button>
+        </form>
+      </Toggleable>
     </div>
 
   )
