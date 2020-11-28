@@ -6,8 +6,9 @@ const Users = () => {
   const users = useSelector(state => state.users)
 
   return (
-    <div id="users">
-      <table>
+    <div id="users" className="section container content">
+      <h2>Users</h2>
+      <table className="table is-striped is-hoverable">
         <thead>
           <tr>
             <th>Name</th>

@@ -7,6 +7,7 @@ import LoginPage from './components/LoginPage'
 import Header from './components/Header'
 import { BrowserRouter as Router } from 'react-router-dom'
 
+import '@fortawesome/fontawesome-free/css/all.css'
 import 'bulma/bulma.sass'
 import './styles/style.scss'
 import Footer from './components/Footer'

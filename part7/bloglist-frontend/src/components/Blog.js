@@ -45,15 +45,19 @@ const Blog = ({ blog }) => {
 
   const handleAddComment = (e) => {
     e.preventDefault()
-    const comment = {
-      content: commentEntry,
+    if (commentEntry !== '') {
+      const comment = {
+        content: commentEntry,
+      }
+
+      const newCommentBlog = {
+        ...blog,
+        user: blog.user.id,
+        comments: blog.comments.concat(comment)
+      }
+      dispatch(updateBlog(newCommentBlog))
     }
-    const newCommentBlog = {
-      ...blog,
-      user: blog.user.id,
-      comments: blog.comments.concat(comment)
-    }
-    dispatch(updateBlog(newCommentBlog))
+
     setComment('')
   }
 
@@ -62,32 +66,35 @@ const Blog = ({ blog }) => {
    */
   const renderRemoveButton = () => {
     if (blog && blog.user) {
-      if (user.id === blog.user) {
-        return (
-          <button onClick={handleRemove}>Remove Post</button>
-        )
-      }
       if (user.username === blog.user.username) {
         return (
-          <button onClick={handleRemove}>Remove Post</button>
+          <button className="button is-danger is-medium" onClick={handleRemove}>
+            <span className="icon is-small">
+              <i className="fas fa-trash"></i>
+            </span>
+            <span>Remove Post</span>
+          </button>
         )
       }
     }
     return
   }
-  console.log(blog)
+
   const renderComments = () => {
     if (blog.comments) {
       return (
         <div className="comments">
           <h3>Comments</h3>
-          <form onSubmit={handleAddComment}>
-            <input value={commentEntry} type="text" name="add-comment" onChange={({ target }) => {setComment(target.value)}}></input>
-            <button type="submit">Add Comment</button>
-          </form>
           <ul>
             {blog.comments.map((comment) => <li key={comment.id}>{comment.content}</li>)}
           </ul>
+          <form onSubmit={handleAddComment}>
+            <div className="field">
+              <textarea className="textarea" value={commentEntry} type="text" name="add-comment" onChange={({ target }) => {setComment(target.value)}}></textarea>
+            </div>
+            <button className="button is-link is-small" type="submit">Add Comment</button>
+          </form>
+
         </div>
       )
     }
@@ -96,10 +103,16 @@ const Blog = ({ blog }) => {
 
   return (
     blog &&
-    ( <div className="blog">
+    ( <div className="blog content container section">
       <h2 className="blog-title">{blog.title}</h2>
       <p className="blog-url"><a href={blog.url}>{blog.url}</a></p>
-      <p className="blog-likes">{blog.likes} likes</p> <button className="btn-like" onClick={handleLike}>Like</button>
+      <div className="blog-likes">
+        <p>{blog.likes} likes</p>
+        <button className="button is-small is-success" onClick={handleLike}>
+          <span className="icon is-small"><i className="far fa-thumbs-up"></i></span>
+          <span>Like</span>
+        </button>
+      </div>
       <p className="blog-author">Author {blog.author}</p>
       {renderComments()}
       {renderRemoveButton()}
