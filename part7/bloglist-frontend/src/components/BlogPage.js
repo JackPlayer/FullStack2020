@@ -8,6 +8,7 @@ import { initializeUsers } from '../reducers/usersReducer'
 
 
 import BlogForm from './BlogForm'
+import Blog from './Blog'
 import BlogList from './BlogList'
 import Users from './Users'
 import User from './User'
@@ -21,14 +22,18 @@ const BlogPage = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
 
   useEffect(() => {
     dispatch(initializeBlogs())
     dispatch(initializeUsers())
   }, [dispatch])
 
-  const match = useRouteMatch('/users/:id')
-  const userSelected = match ? users.find(user => user.id === match.params.id) : null
+  const userMatch = useRouteMatch('/users/:id')
+  const userSelected = userMatch ? users.find(user => user.id === userMatch.params.id) : null
+
+  const blogMatch = useRouteMatch('/blogs/:id')
+  const blogSelected = blogMatch ? blogs.find(blog => blog.id === blogMatch.params.id) : null
   /**
    * Handles the logout button press
    * @param {*} event Event handler for logout
@@ -51,6 +56,9 @@ const BlogPage = () => {
         </Route>
         <Route path="/users">
           <Users />
+        </Route>
+        <Route path="/blogs/:id">
+          <Blog blog={blogSelected} />
         </Route>
         <Route path="/">
           <BlogList />

@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
+
 import { useSelector, useDispatch } from 'react-redux'
 import { removeBlog, updateBlog } from '../reducers/blogReducer'
-import Toggleable from './Toggleable'
 
 
 /**
@@ -11,6 +12,7 @@ import Toggleable from './Toggleable'
  * @param {} props The properties passed to the component
  */
 const Blog = ({ blog }) => {
+  const history = useHistory()
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
@@ -36,6 +38,7 @@ const Blog = ({ blog }) => {
     e.preventDefault()
     if (window.confirm(`Press ok to confirm removal of ${blog.title} by ${blog.author}.`) ) {
       dispatch(removeBlog(blog.id))
+      history.push('/')
     }
   }
 
@@ -61,12 +64,11 @@ const Blog = ({ blog }) => {
   return (
     <div className="blog">
       <h2 className="blog-title">{blog.title}</h2>
-      <p className="blog-author">Author: {blog.author}</p>
-      <Toggleable buttonPrompt="View">
-        <p className="blog-url">URL: {blog.url}</p>
-        <p className="blog-likes">Likes: {blog.likes}</p> <button className="btn-like" onClick={handleLike}>Like</button>
-        {renderRemoveButton()}
-      </Toggleable>
+      <p className="blog-url"><a href={blog.url}>{blog.url}</a></p>
+      <p className="blog-likes">{blog.likes} likes</p> <button className="btn-like" onClick={handleLike}>Like</button>
+      <p className="blog-author">Author {blog.author}</p>
+
+      {renderRemoveButton()}
     </div>
   )
 

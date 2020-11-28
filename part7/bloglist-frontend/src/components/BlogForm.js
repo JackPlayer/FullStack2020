@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { addNewBlog } from '../reducers/blogReducer'
 import PropTypes from 'prop-types'
 
@@ -10,6 +11,7 @@ import PropTypes from 'prop-types'
  */
 const BlogForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const user = useSelector(state => state.user)
   const [url, setURL] = useState('')
   const [title, setTitle] = useState('')
@@ -31,6 +33,7 @@ const BlogForm = () => {
     setAuthor('')
     setTitle('')
     setURL('')
+    history.push('/')
   }
 
   return (
