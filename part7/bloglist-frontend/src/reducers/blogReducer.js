@@ -6,10 +6,8 @@ const initialState = []
  * Redux anecdote reducer
  */
 const blogReducer = (state = initialState, action) => {
-  console.log('reducer', action)
   switch(action.type) {
   case 'ALL_BLOGS':
-    console.log('all-blogs')
     return action.data
   case 'NEW_BLOG':
     return state.concat(action.data)
@@ -37,7 +35,7 @@ export const addNewBlog = (blog) => {
 /**
  * Initializes the blogs by using blog service to get blogs stored in db
  */
-export const removeBlog = (id) => {
+export const remove = (id) => {
   return async dispatch => {
     await blogService.remove({ id, })
     dispatch ({
@@ -51,10 +49,8 @@ export const removeBlog = (id) => {
  * Initializes the blogs by using blog service to get blogs stored in db
  */
 export const initializeBlogs = () => {
-  console.log('init')
   return async dispatch => {
     const blogs = await blogService.getAll()
-    console.log(blogs)
     dispatch ({
       type: 'ALL_BLOGS',
       data: blogs
