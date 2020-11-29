@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from '../reducers/blogReducer'
 import { setUser } from '../reducers/userReducer'
@@ -67,9 +67,10 @@ const BlogPage = () => {
         <Route path="/blogs/:id">
           <Blog blog={blogSelected} />
         </Route>
-        <Route path="/">
+        <Route path="/blogs">
           <BlogList />
         </Route>
+        <Route render={() => <Redirect to="/blogs" />} />
       </Switch>
       {renderLogout()}
     </div>

@@ -5,7 +5,7 @@ import { setUser } from './reducers/userReducer'
 import BlogPage from './components/BlogPage'
 import LoginPage from './components/LoginPage'
 import Header from './components/Header'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'bulma/bulma.sass'
@@ -38,7 +38,16 @@ const App = () => {
         </Router>
       )
     } else {
-      return <LoginPage />
+      return (
+        <Router>
+          <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route render={() => <Redirect to="/login" />} />
+          </Switch>
+        </Router>
+      )
     }
   }
   return (
