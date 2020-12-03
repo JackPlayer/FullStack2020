@@ -1,0 +1,15 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "GraphQL Server for a Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jack Player",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.19.0",
+    "graphql": "^15.4.0"
+  }
+}
