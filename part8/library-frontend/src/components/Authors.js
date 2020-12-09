@@ -1,5 +1,6 @@
   
 import React from 'react'
+import BirthYearForm from './BirthYearForm'
 import { ALL_AUTHORS } from '../queries/queries'
 import { useQuery } from '@apollo/client'
 
@@ -44,6 +45,7 @@ const Authors = (props) => {
     <div>
       <h2>authors</h2>
       { renderAuthorsTable() }
+      <BirthYearForm />
     </div>
   )
 }
