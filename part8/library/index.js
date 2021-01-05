@@ -49,6 +49,7 @@ const typeDefs = gql`
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
     me: User
+    booksForMe: [Book]!
   }
 
   type Mutation {
@@ -93,9 +94,19 @@ const resolvers = {
     },
     me: (root, args, context) => {
       return context.currentUser
+    },
+
+    booksForMe: (root, args, context) => {
+      if (!context.currentUser) throw new AuthenticationError("Not authenticated")
+
+      const genre = context.currentUser.favoriteGenre
+
+      return Book.find({ genres: genre}).populate('author')
+
     }
   },
   Mutation: {
+    
     addBook: async (root, args, context) => {
       const currentUser = context.currentUser
       if (!currentUser) throw new AuthenticationError("Not authenticated")

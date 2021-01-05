@@ -69,3 +69,16 @@ export const ME = gql`
     }
   }
 `
+
+export const BOOKS_FOR_ME = gql`
+  query {
+    booksForMe {
+      title,
+      published,
+      author {
+        name,
+      },
+      genres
+    }
+  }
+`
