@@ -82,8 +82,8 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: (root, args) => {
-      let currBooks = Book.find({})
+    allBooks: async (root, args) => {
+      let currBooks = await Book.find({}).populate('author')
       if (args.author != undefined) currBooks = currBooks.filter((book) => book.author === args.author)
       if (args.genre != undefined) currBooks = currBooks.filter((book) => book.genres.includes(args.genre))
       return currBooks
@@ -97,7 +97,9 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args, context) => {
+      console.log("Adding Books")
       const currentUser = context.currentUser
+      console.log("Current User: ", currentUser)
       if (!currentUser) throw new AuthenticationError("Not authenticated")
       const authorList = await Author.find({name: args.author})
       let author;
@@ -107,6 +109,8 @@ const resolvers = {
       } else {
         author = authorList[0]
       }
+
+      console.log("Author: ", author)
       const newBook = new Book ({
         ...args,
         author: author
@@ -119,7 +123,7 @@ const resolvers = {
         })
       }
 
-
+      console.log("New Book", newBook)
       return newBook
     },
 
