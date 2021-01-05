@@ -97,9 +97,7 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args, context) => {
-      console.log("Adding Books")
       const currentUser = context.currentUser
-      console.log("Current User: ", currentUser)
       if (!currentUser) throw new AuthenticationError("Not authenticated")
       const authorList = await Author.find({name: args.author})
       let author;
@@ -110,7 +108,6 @@ const resolvers = {
         author = authorList[0]
       }
 
-      console.log("Author: ", author)
       const newBook = new Book ({
         ...args,
         author: author
