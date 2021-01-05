@@ -7,14 +7,29 @@ import NewBook from './components/NewBook'
 import Login from './components/Login'
 import Recommendations from './components/Recommendations'
 
+import {
+  useSubscription
+} from '@apollo/client'
+
+
+import {BOOK_ADDED} from './queries/queries'
+
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
 
+  
   useEffect(() => {
     const token = localStorage.getItem('library-token')
     if (token) setToken(token)
   }, [])
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      console.log("New Book Added: ", subscriptionData)
+    }
+  })
+
   const handleLogout = (e) => {
     e.preventDefault()
     
