@@ -62,7 +62,7 @@ const typeDefs = gql`
     editAuthor(
       name: String!,
       setBornTo: Int!,
-    ): Author
+    ): Author 
 
     createUser(
       username: String!

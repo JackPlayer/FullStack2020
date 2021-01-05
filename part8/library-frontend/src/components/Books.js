@@ -30,7 +30,7 @@ const Books = (props) => {
               published
             </th>
           </tr>
-          {booksResult.data.allBooks.map(a =>
+          {booksResult.data && booksResult.data.allBooks.map(a =>
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author}</td>
