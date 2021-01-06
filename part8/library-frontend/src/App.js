@@ -8,16 +8,16 @@ import Login from './components/Login'
 import Recommendations from './components/Recommendations'
 
 import {
-  useSubscription
+  useSubscription, useQuery
 } from '@apollo/client'
 
 
-import {BOOK_ADDED} from './queries/queries'
+import {ALL_BOOKS, BOOK_ADDED} from './queries/queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
-
+  const books = useQuery(ALL_BOOKS)
   
   useEffect(() => {
     const token = localStorage.getItem('library-token')
@@ -27,6 +27,7 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       console.log("New Book Added: ", subscriptionData)
+      books.refetch()
     }
   })
 
