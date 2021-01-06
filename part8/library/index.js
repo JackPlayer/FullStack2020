@@ -95,8 +95,19 @@ const resolvers = {
       if (args.genre != undefined) currBooks = currBooks.filter((book) => book.genres.includes(args.genre))
       return currBooks
     },
-    allAuthors: () => {
-      return Author.find({})
+    allAuthors: async () => {
+      const authors = await Author.find({})
+      console.log(authors)
+      const authorsObject = authors.map(author => {
+        return {
+          name: author.name,
+          born: author.born, 
+          id: author.id,
+          bookCount: author.books.length,
+        }
+      })
+
+      return authorsObject
     },
     me: (root, args, context) => {
       return context.currentUser
