@@ -1,0 +1,15 @@
+{
+  "name": "body-mass-index",
+  "version": "1.0.0",
+  "description": "Typescript introduction for FullStack 2020 Course",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jack Player",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
