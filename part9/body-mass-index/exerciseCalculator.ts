@@ -77,10 +77,4 @@ const getRating = (target: number, average: number): Rating => {
   return {rating: 1, ratingDescription: 'Bad'};
 };
 
-try {
-  const {exerciseList, target} = parseExerciseArguments(process.argv);
-  console.log(calculateExercise(exerciseList, target));
-} catch (error) {
-
-  console.log("Error: ", error.message);
-}
+export default {getRating, calculateExercise, parseExerciseArguments}; 
