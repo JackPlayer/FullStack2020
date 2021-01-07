@@ -1,4 +1,4 @@
-type BMICategories = 'Very severely underweight' | 'Severly underweight' | 'Underweight' | 'Normal (healthy weight)' | 'Overweight' | 'Moderately Obese' | 'Severely Obese' | 'Very Severely Obese'
+type BMICategories = 'Very severely underweight' | 'Severly underweight' | 'Underweight' | 'Normal (healthy weight)' | 'Overweight' | 'Moderately Obese' | 'Severely Obese' | 'Very Severely Obese';
 
 interface BMIInputArguments {
   height: number,
@@ -6,24 +6,24 @@ interface BMIInputArguments {
 }
 
 const parseBMIArguments = (args: string[]):BMIInputArguments => {
-  if (args.length < 4) throw new Error('Not enough arguments!')
-  if (args.length > 4) throw new Error('Too many arguments!')
+  if (args.length < 4) throw new Error('Not enough arguments!');
+  if (args.length > 4) throw new Error('Too many arguments!');
 
-  if (isNaN(Number(args[2])) || isNaN(Number(args[3]))) throw new Error('Arguments must be numbers!')
+  if (isNaN(Number(args[2])) || isNaN(Number(args[3]))) throw new Error('Arguments must be numbers!');
   return {
     height: Number(args[2]),
     weight: Number(args[3])
-  }
-}
+  };
+};
 
 const calculateBMI = (heightCentimeters: number, weightKilograms:number): number => {
   const heightMeters = heightCentimeters / 100; 
-  if (heightMeters <= 0) throw new Error('Height cannot be less than 0m')
-  if (weightKilograms <= 0) throw new Error('Weight cannot be less than 0kg')
+  if (heightMeters <= 0) throw new Error('Height cannot be less than 0m');
+  if (weightKilograms <= 0) throw new Error('Weight cannot be less than 0kg');
 
 
-  return (weightKilograms) / ((heightMeters) ** 2)
-}
+  return (weightKilograms) / ((heightMeters) ** 2);
+};
 
 const messageFromBMI = (bmi: number):BMICategories => {
   if (bmi < 15) return 'Very severely underweight';
@@ -34,6 +34,6 @@ const messageFromBMI = (bmi: number):BMICategories => {
   if (bmi >= 30 && bmi < 35) return "Moderately Obese";
   if (bmi >= 35 && bmi < 40) return "Severely Obese";
   return "Very Severely Obese";
-}
+};
 
-export default {messageFromBMI, calculateBMI, parseBMIArguments} 
+export default {messageFromBMI, calculateBMI, parseBMIArguments}; 
