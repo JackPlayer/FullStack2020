@@ -4,7 +4,8 @@
   "description": "Typescript introduction for FullStack 2020 Course",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "calculateBMI": "ts-node -- bmiCalculator.ts"
   },
   "author": "Jack Player",
   "license": "ISC",
