@@ -1,5 +1,20 @@
 type BMICategories = 'Very severely underweight' | 'Severly underweight' | 'Underweight' | 'Normal (healthy weight)' | 'Overweight' | 'Moderately Obese' | 'Severely Obese' | 'Very Severely Obese'
 
+interface BMIInputArguments {
+  height: number,
+  weight: number,
+}
+
+const parseBMIArguments = (args: string[]):BMIInputArguments => {
+  if (args.length < 4) throw new Error('Not enough arguments!')
+  if (args.length > 4) throw new Error('Too many arguments!')
+
+  if (isNaN(Number(args[2])) || isNaN(Number(args[3]))) throw new Error('Arguments must be numbers!')
+  return {
+    height: Number(args[2]),
+    weight: Number(args[3])
+  }
+}
 
 const calculateBMI = (heightCentimeters: number, weightKilograms:number): number => {
   const heightMeters = heightCentimeters / 100; 
@@ -21,4 +36,9 @@ const messageFromBMI = (bmi: number):BMICategories => {
   if (bmi > 40) return "Very Severely Obese";
 }
 
-console.log(messageFromBMI(calculateBMI(175, 72)))
+try {
+  const { height, weight } = parseBMIArguments(process.argv)
+  console.log(messageFromBMI(calculateBMI(height, weight)))
+} catch (error) {
+  console.log('Error: ', error.message)
+}

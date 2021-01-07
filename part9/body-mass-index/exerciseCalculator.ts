@@ -15,12 +15,12 @@ interface Rating {
 
 type RatingMessage = 'Bad' | 'Average' | 'Good'
 
-interface InputArguments {
+interface ExerciseInputArguments {
   exerciseList: number[],
   target: number,
 }
 
-const parseArguments = (args: string[]): InputArguments => {
+const parseExerciseArguments = (args: string[]): ExerciseInputArguments => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
   if (isNaN(Number(args[2]))) throw new Error('Target must be a number');
@@ -77,9 +77,8 @@ const getRating = (target: number, average: number): Rating => {
 }
 
 try {
-  const {exerciseList, target} = parseArguments(process.argv);
+  const {exerciseList, target} = parseExerciseArguments(process.argv);
   console.log(calculateExercise(exerciseList, target))
 } catch (error) {
   console.log("Error: ", error.message);
 }
-parseArguments(process.argv)
