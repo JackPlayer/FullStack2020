@@ -15,6 +15,34 @@ interface Rating {
 
 type RatingMessage = 'Bad' | 'Average' | 'Good'
 
+interface InputArguments {
+  exerciseList: number[],
+  target: number,
+}
+
+const parseArguments = (args: string[]): InputArguments => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  if (isNaN(Number(args[2]))) throw new Error('Target must be a number');
+  const target = Number(args[2])
+
+  const exerciseList = [];
+
+  for (let i = 3; i < args.length; i++ ) {
+    const arg = args[i];
+    if (!isNaN(Number(arg))) {
+      exerciseList.push(Number(arg))
+    } else {
+      throw new Error(`Provided value ${arg} is not a number!`);
+    }
+  }
+  return {
+    exerciseList,
+    target,
+  };
+
+}
+
 const calculateExercise = (exerciseList: number[], target: number): Result => {
   const periodLength = exerciseList.length;
   let trainingDays = 0;
@@ -48,5 +76,10 @@ const getRating = (target: number, average: number): Rating => {
   if (average < target) return {rating: 1, ratingDescription: 'Bad'}
 }
 
-console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1]
-, 2));
+try {
+  const {exerciseList, target} = parseArguments(process.argv);
+  console.log(calculateExercise(exerciseList, target))
+} catch (error) {
+  console.log("Error: ", error.message);
+}
+parseArguments(process.argv)
