@@ -36,9 +36,4 @@ const messageFromBMI = (bmi: number):BMICategories => {
   return "Very Severely Obese";
 }
 
-try {
-  const { height, weight } = parseBMIArguments(process.argv)
-  console.log(messageFromBMI(calculateBMI(height, weight)))
-} catch (error) {
-  console.log('Error: ', error.message)
-}
+export default {messageFromBMI, calculateBMI, parseBMIArguments} 
