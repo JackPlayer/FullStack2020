@@ -73,7 +73,7 @@ const calculateExercise = (exerciseList: number[], target: number): Result => {
 const getRating = (target: number, average: number): Rating => {
   if (average >= target + 1) return {rating: 3, ratingDescription: 'Good'}
   if (average >= target && average < target + 1) return {rating: 2, ratingDescription: 'Average'}
-  if (average < target) return {rating: 1, ratingDescription: 'Bad'}
+  return {rating: 1, ratingDescription: 'Bad'}
 }
 
 try {

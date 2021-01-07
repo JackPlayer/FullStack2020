@@ -33,7 +33,7 @@ const messageFromBMI = (bmi: number):BMICategories => {
   if (bmi >= 25 && bmi < 30) return "Overweight";
   if (bmi >= 30 && bmi < 35) return "Moderately Obese";
   if (bmi >= 35 && bmi < 40) return "Severely Obese";
-  if (bmi > 40) return "Very Severely Obese";
+  return "Very Severely Obese";
 }
 
 try {
