@@ -4,11 +4,10 @@ import express from 'express';
 import patientService from '../services/patientService';
 
 const router = express.Router();
-import patientsService from '../services/patientService'; 
 import toNewPatient from '../utils';
 
 router.get('/', (_req, res) => {
-    res.send(patientsService.getEntries());
+    res.send(patientService.getEntries());
 });
 
 router.post('/', (req, res) => {
