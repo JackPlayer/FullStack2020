@@ -1,26 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import express from 'express';
+import patientService from '../services/patientService';
 
 const router = express.Router();
 import patientsService from '../services/patientService'; 
+import toNewPatient from '../utils';
 
 router.get('/', (_req, res) => {
     res.send(patientsService.getEntries());
 });
 
 router.post('/', (req, res) => {
-    const { name, dateOfBirth, ssn, gender, occupation } = req.body;
-    
+    try {
+        const newPatientEntry = toNewPatient(req.body);
 
-    const newPatientEntry = patientsService.addPatient({
-        name,
-        dateOfBirth,
-        ssn,
-        gender,
-        occupation,
-    });
-
-    res.json(newPatientEntry);
+        const addedEntry = patientService.addPatient(newPatientEntry);
+        res.json(addedEntry);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
 });
 
 export default router;

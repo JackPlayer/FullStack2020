@@ -1,5 +1,5 @@
 import patientsData from '../../data/patients.json';
-import { Patient, NewPatient } from '../types';
+import { Patient, NewPatientEntry } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -17,7 +17,7 @@ const getEntries = (): Array<Omit<Patient, 'ssn'>> => {
 };
 
 const addPatient = (
-    entry: NewPatient,
+    entry: NewPatientEntry,
     ):Patient => {
     
     const newPatient = {
