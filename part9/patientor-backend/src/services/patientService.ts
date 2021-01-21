@@ -19,6 +19,8 @@ const getEntries = (): Array<Omit<Patient, 'ssn'>> => {
 
 const getEntry = (id: string): Patient | undefined => {
     const findPatient = patients.find((patient) => patient.id === id);
+
+    if (!findPatient) throw new Error('Patient with that ID could not be found!');
     return findPatient;
 };
 

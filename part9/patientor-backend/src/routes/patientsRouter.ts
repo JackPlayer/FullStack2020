@@ -11,7 +11,12 @@ router.get('/', (_req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    res.send(patientService.getEntry(req.params.id));
+    try {
+        res.send(patientService.getEntry(req.params.id));
+
+    } catch (err) {
+        res.status(400).json({error: err.message});
+    }
 });
 
 router.post('/', (req, res) => {
