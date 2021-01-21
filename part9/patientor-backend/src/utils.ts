@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NewPatientEntry, Gender } from './types';
+import { NewPatientEntry, Gender, Entry } from './types';
 
 const toNewPatient = (object: any): NewPatientEntry => {
     return {
@@ -12,6 +13,7 @@ const toNewPatient = (object: any): NewPatientEntry => {
         occupation: parseOccupation(object.occupation),
         ssn: parseSSN(object.ssn),
         gender: parseGender(object.gender),
+        entries: parseEntries(object.entries),
     };
 };
 
@@ -27,6 +29,12 @@ const isGender = (param: any): param is Gender => {
     return Object.values(Gender).includes(param);
   };
 
+const parseEntries = (entries: any): Entry[] => {
+    if (!entries) {
+        throw new Error(`Incorred or missing entries: ${entries}`);
+    }
+    return entries;
+};
 
 const parseName = (name: any): string => {
     if (!name || !isString(name)) {

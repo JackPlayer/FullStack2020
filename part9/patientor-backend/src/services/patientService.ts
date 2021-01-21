@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const patients = patientsData as Array<Omit<Patient, "ssn">>;
+const patients = patientsData as Array<Patient>;
 
 const getEntries = (): Array<Omit<Patient, 'ssn'>> => {
     return patients.map(({id, name, dateOfBirth, gender, occupation}) => ({
@@ -12,8 +12,14 @@ const getEntries = (): Array<Omit<Patient, 'ssn'>> => {
         name,
         dateOfBirth,
         gender,
-        occupation
+        occupation,
+        entries: [],
     }));
+};
+
+const getEntry = (id: string): Patient | undefined => {
+    const findPatient = patients.find((patient) => patient.id === id);
+    return findPatient;
 };
 
 const addPatient = (
@@ -31,4 +37,5 @@ const addPatient = (
 export default {
     getEntries,
     addPatient,
+    getEntry,
 };
