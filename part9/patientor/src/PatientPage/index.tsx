@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Header, Icon, SemanticICONS } from "semantic-ui-react";
-import { useStateValue } from "../state";
+import { useStateValue, setPatient } from "../state";
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
 
@@ -16,8 +16,8 @@ const PatientPage: React.FC = () => {
         }
         const fetchPatient = async () => {
             try {
-                const {data: patientResponse} = await axios.get<Patient> (`${apiBaseUrl}/patients/${id}`)
-                dispatch({type: "SET_PATIENT", payload: patientResponse});
+                const {data: patientResponse} = await axios.get<Patient> (`${apiBaseUrl}/patients/${id}`);
+                dispatch(setPatient(patientResponse));
             } catch (err) {
                 console.log(err);
             }
@@ -55,8 +55,7 @@ const PatientPage: React.FC = () => {
     return (
         <>
          { patient && renderPatient()}
-         { !patient && <Icon loading name='asterisk' />
- }
+         { !patient && <Icon loading name='asterisk' /> }
         </>
     );
 };
