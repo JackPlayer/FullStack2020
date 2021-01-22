@@ -5,6 +5,7 @@ import { Header, Icon, SemanticICONS } from "semantic-ui-react";
 import { useStateValue, setPatient } from "../state";
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
+import EntryList from '../Entries/EntryList';
 
 const PatientPage: React.FC = () => {
     const { id } = useParams<{id: string}>();
@@ -48,6 +49,7 @@ const PatientPage: React.FC = () => {
                 <Header as="h2">{patient.name} <Icon name={genderIcon}/></Header>
                 <p><strong><Icon name="briefcase" /> Occupation:</strong> {patient.occupation}</p>
                 <p><strong><Icon name="book" /> ssn:</strong> {patient.ssn}</p>
+                <EntryList entries={patient.entries} />
             </div> 
         );
     };
