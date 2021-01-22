@@ -30,7 +30,6 @@ const App: React.FC = () => {
     const fetchDiagnosisList = async () => {
       try {
         const { data: diagnosisList }  = await axios.get<Diagnosis[]>(`${apiBaseUrl}/diagnosis`);
-        console.log("Diagnosis: ", diagnosisList);
         dispatch(setDiagnosisList(diagnosisList));
       } catch (err) {
         console.log(err.message);
