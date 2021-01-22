@@ -1,10 +1,10 @@
-import patientsData from '../../data/patients.json';
+import patientsData from '../../data/patients';
 import { Patient, NewPatientEntry } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 
 
 
-const patients = patientsData as Array<Patient>;
+const patients = patientsData;
 
 const getEntries = (): Array<Omit<Patient, 'ssn'>> => {
     return patients.map(({id, name, dateOfBirth, gender, occupation}) => ({
